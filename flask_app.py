@@ -19,6 +19,12 @@ def load_user(user_id):
     return db_sess.query(User).get(user_id)
 
 
+@app.route('/')
+@app.route('/index')
+def index():
+    return render_template("base.html")
+
+
 @app.route('/logout')
 @login_required
 def logout():
@@ -32,7 +38,7 @@ def not_found(error):
 
 
 def main():
-    db_session.global_init("db/mars_explorer.db")
+#    db_session.global_init("db/user.db")
     app.run(debug=True)
 
 
