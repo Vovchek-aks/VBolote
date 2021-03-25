@@ -38,7 +38,7 @@ def not_found(error):
 
 
 def main():
-#    db_session.global_init("db/user.db")
+    db_session.global_init("db/user.db")
     app.run(debug=True)
 
 
