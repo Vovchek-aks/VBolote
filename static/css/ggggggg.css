@@ -1,0 +1,95 @@
+/* Dropdown Button */
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
+body {
+    background-color: #acb78e;
+    color: aliceblue;
+}
+
+header {
+    background-color: #5e6943;
+}
+
+.AppName {
+    color: aliceblue;
+    padding-left: 4em;
+}
+
+button {
+    height: 60px;
+  font-weight: 700;
+  color: #7b917b;
+  text-decoration: none;
+  padding: .5em 2em;
+  border-radius: 8px;
+  background: rgb(123,145,123);
+  box-shadow: 0 -3px rgb(53,167,110) inset;
+  transition: 0.2s;
+}
+
+a.btn-login {
+    height: 60px;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+    padding: 1.1em;
+  border-radius: 8px;
+  background: #4CAF50;
+  transition: 0.2s;
+}
+
+a.btn-reg {
+    height: 60px;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+    padding: 1.1em;
+  border-radius: 8px;
+  background: rgb(33,147,70);
+  transition: 0.2s;
+}
