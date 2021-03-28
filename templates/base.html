@@ -3,25 +3,28 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="../static/img/icon_frog.png" type="image/png">
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
           crossorigin="anonymous">
-    <link rel="stylesheet" href= "{{ url_for('static', filename='css/ggggggg.css') }}">
+    <link rel="stylesheet" href= "{{ url_for('static', filename='css/decor.css') }}">
+
     <title>VBolote</title>
 </head>
 <body>
 <header>
     <nav class="navbar navbar-light" style="background-color: #5e6943;">
     <div class="dropdown">
-  <button class="dropbtn"><img src="../static/img/frog.png" height="30" alt="..."> Болото</button>
+  <button class="dropbtn">Болото</button>
   <div class="dropdown-content">
     <a href="#">Link 1</a>
     <a href="#">Link 2</a>
     <a href="#">Link 3</a>
   </div>
 </div>
-        <h1 class="AppName">VBolote</h1>
+        <a type="button" class="AppName" href="/"><img src="../static/img/icon_frog.png" height="50" alt="...">VBolote</a>
+{#        <h1 class="AppName" href="/" ><img src="../static/img/icon_frog.png" height="50" alt="...">VBolote</h1>#}
 
         {% if current_user.is_authenticated %}
 

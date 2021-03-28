@@ -13,18 +13,18 @@ class User(SqlAlchemyBase, UserMixin, SerializerMixin):
 
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
-    surname = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    age = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
-    position = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    speciality = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    address = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     email = sqlalchemy.Column(sqlalchemy.String,
                               index=True, unique=True, nullable=True)
+    sex = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    age = sqlalchemy.Column(sqlalchemy.Integer, nullable=False)
+    sexual_orientation = sqlalchemy.Column(sqlalchemy.String, nullable=False)
+    about = sqlalchemy.Column(sqlalchemy.String, nullable=False)
+    au_attitude = sqlalchemy.Column(sqlalchemy.String, nullable=False)
+    frog_attitude = sqlalchemy.Column(sqlalchemy.String, nullable=False)
+    cvc_code = au_attitude = sqlalchemy.Column(sqlalchemy.String, nullable=False)
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    modified_date = sqlalchemy.Column(sqlalchemy.DateTime,
-                                     default=datetime.datetime.now)
-    jobs = orm.relation("Job")
+    # jobs = orm.relation("Job")
 
     def set_password(self, password):
         self.hashed_password = generate_password_hash(password)

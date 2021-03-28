@@ -19,16 +19,16 @@
     position: absolute;
     background-color: #f1f1f1;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
+    border-radius: 8px;
 }
 
 /* Links inside the dropdown */
 .dropdown-content a {
     color: black;
     padding: 12px 16px;
-    text-decoration: none;
     display: block;
+    border-radius: 8px;
 }
 
 /* Change color of dropdown links on hover */
@@ -42,7 +42,7 @@
 }
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {
+.dropbtn:hover {
     background-color: #3e8e41;
 }
 
@@ -57,39 +57,77 @@ header {
 
 .AppName {
     color: aliceblue;
+
     padding-left: 4em;
+    font-size: 40px;
+    font-family: "Voguer Sans Free"
+}
+
+.AppName:hover {
+    color: white;
+    font-family: "Voguer Sans Free";
 }
 
 button {
     height: 60px;
-  font-weight: 700;
-  color: #7b917b;
-  text-decoration: none;
-  padding: .5em 2em;
-  border-radius: 8px;
-  background: rgb(123,145,123);
-  box-shadow: 0 -3px rgb(53,167,110) inset;
-  transition: 0.2s;
+    font-weight: 700;
+    color: #7b917b;
+    text-decoration: none;
+    padding: .5em 2em;
+    border-radius: 8px;
+    background: rgb(123, 145, 123);
+    box-shadow: 0 -3px rgb(53, 167, 110) inset;
+    transition: 0.2s;
 }
 
 a.btn-login {
     height: 60px;
-  font-weight: 700;
-  color: white;
-  text-decoration: none;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
     padding: 1.1em;
-  border-radius: 8px;
-  background: #4CAF50;
-  transition: 0.2s;
+    border-radius: 8px;
+    background: #4CAF50;
+    transition: 0.2s;
 }
 
 a.btn-reg {
     height: 60px;
-  font-weight: 700;
-  color: white;
-  text-decoration: none;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
     padding: 1.1em;
-  border-radius: 8px;
-  background: rgb(33,147,70);
-  transition: 0.2s;
+    border-radius: 8px;
+    background: #4CAF50;
+    transition: 0.2s;
+}
+
+a.btn-login:hover {
+    color: white;
+    background-color: #3e8e41;
+}
+
+a.btn-reg:hover {
+    color: white;
+    background-color: #3e8e41;
+}
+
+.btn-primary {
+    height: 50px;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    background: #4CAF50;
+    transition: 0.2s;
+    border-color: transparent;
+}
+
+.btn-primary:hover {
+    background-color: #3e8e41;
+    border-color: transparent;
+}
+
+h1 {
+    color: white;
 }
