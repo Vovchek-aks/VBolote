@@ -4,11 +4,18 @@
 <br>
 <h1>Регистрация</h1>
 <br>
+
+<p style="color: green"> <!-- мож перенести в css-->
+    Необязательно*
+</p>
+
 <form action="" method="post">
     {{ form.hidden_tag() }}
     <p>
-        {{ form.name.label }}<br>
-        {{ form.name(class="form-control") }}<br>
+        {{ form.name.label }
+        }<br>
+        {{ form.name(class="form-control") }}
+        <br>
         {% for error in form.name.errors %}
             <p class="alert alert-danger" role="alert">
                 {{ error }}
@@ -54,15 +61,6 @@
     <p>
         {{ form.age.label }}<br>
         {{ form.age(class="form-control") }}<br>
-        {% for error in form.age.errors %}
-            <p class="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.sexual_orientation.label }}<br>
-        {{ form.sexual_orientation(class="form-control") }}<br>
         {% for error in form.age.errors %}
             <p class="alert alert-danger" role="alert">
                 {{ error }}
