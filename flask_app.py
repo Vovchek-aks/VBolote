@@ -55,13 +55,9 @@ def register():
         user = User(
             name=form.name.data,
             email=form.email.data,
-            sex=form.sex.data,
-            age=form.age.data,
-            sexual_orientation=form.sexual_orientation.data,
-            about=form.about.data,
-            au_attitude=form.au_attitude.data,
-            frog_attitude=form.frog_attitude.data,
-            cvc_code=form.cvc_code.data,
+            # au_attitude=form.au_attitude.data,
+            # frog_attitude=form.frog_attitude.data,
+            # cvc_code=form.cvc_code.data,
             # modified_date=dt.date.today()
         )
         user.set_password(form.password.data)
@@ -77,7 +73,6 @@ def register():
 def logout():
     logout_user()
     return redirect("/")
-
 
 
 @app.errorhandler(404)

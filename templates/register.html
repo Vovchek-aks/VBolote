@@ -12,10 +12,8 @@
 <form action="" method="post">
     {{ form.hidden_tag() }}
     <p>
-        {{ form.name.label }
-        }<br>
-        {{ form.name(class="form-control") }}
-        <br>
+        {{ form.name.label }}<br>
+        {{ form.name(class="form-control") }}<br>
         {% for error in form.name.errors %}
             <p class="alert alert-danger" role="alert">
                 {{ error }}
@@ -49,60 +47,7 @@
             </p>
         {% endfor %}
     </p>
-    <p>
-        {{ form.sex.label }}<br>
-        {{ form.sex(class="form-control") }}<br>
-        {% for error in form.age.errors %}
-            <p class="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.age.label }}<br>
-        {{ form.age(class="form-control") }}<br>
-        {% for error in form.age.errors %}
-            <p class="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.about.label }}<br>
-        {{ form.about(class="form-control") }}<br>
-        {% for error in form.about.errors %}
-            <p class="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.au_attitude.label }}<br>
-        {{ form.au_attitude(class="form-control") }}<br>
-        {% for error in form.au_attitude.errors %}
-            <p class="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.frog_attitude.label }}<br>
-        {{ form.frog_attitude(class="form-control") }}<br>
-        {% for error in form.frog_attitude.errors %}
-            <p class="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.cvc_code.label }}<br>
-        {{ form.cvc_code(class="form-control") }}<br>
-        {% for error in form.cvc_code.errors %}
-            <p class="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
-        {% endfor %}
-    </p>
+
     <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
     {{message}}
 </form>
