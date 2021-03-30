@@ -15,29 +15,32 @@
 <body>
 <header>
     <nav class="navbar navbar-light" style="background-color: #5e6943;">
-    <div class="dropdown">
-  <button class="dropbtn">Болото</button>
-  <div class="dropdown-content">
-    <a href="#">Link 1</a>
-    <a href="#">Link 2</a>
-    <a href="#">Link 3</a>
-  </div>
-</div>
-        <a type="button" class="AppName" href="/"><img src="../static/img/icon_frog.png" height="50" alt="...">VBolote</a>
-{#        <h1 class="AppName" href="/" ><img src="../static/img/icon_frog.png" height="50" alt="...">VBolote</h1>#}
+        <div class="dropdown">
+          <button class="dropbtn">Болото</button>
+            {% if current_user.is_authenticated %}
+                <div class="dropdown-content">
+                    <a href="/user/{{current_user.id}}">Моё болото</a>
+                    <a href="#">Link 2</a>
+                    <a href="#">Link 3</a>
+                </div>
+            {% endif %}
+        </div>
+            <a type="button" class="AppName" href="/"><img src="../static/img/icon_frog.png" height="50" alt="...">VBolote</a>
+    {#        <h1 class="AppName" href="/" ><img src="../static/img/icon_frog.png" height="50" alt="...">VBolote</h1>#}
 
-        {% if current_user.is_authenticated %}
+            {% if current_user.is_authenticated %}
 
-            <a class="navbar-brand" href="/logout">{{ current_user.name }}</a>
+                <a class="navbar-brand" href="/logout" style="color: whitesmoke">{{ current_user.name }}</a>
+                <!--    перенеси в css    -->
 
-        {% else %}
+            {% else %}
 
-            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-              <a type="button" class="btn btn-login" href="/login">Войти</a>
-              <a type="button" class="btn btn-reg" href="/register">Зарегистрироваться</a>
-            </div>
+                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                  <a type="button" class="btn btn-login" href="/login">Войти</a>
+                  <a type="button" class="btn btn-reg" href="/register">Зарегистрироваться</a>
+                </div>
 
-        {% endif %}
+            {% endif %}
 
     </nav>
 </header>

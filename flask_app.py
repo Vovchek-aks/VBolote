@@ -1,9 +1,10 @@
 from flask import Flask, redirect, render_template, request, abort, make_response, jsonify
 from data import db_session
-from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user, AnonymousUserMixin
 import datetime as dt
 from forms.login import LoginForm
 from forms.register import RegisterForm
+from forms.edit_user import EditUserForm
 from data.users import User
 
 app = Flask(__name__)
@@ -21,6 +22,8 @@ def load_user(user_id):
 @app.route('/')
 @app.route('/index')
 def index():
+    if current_user.is_authenticated:
+        return redirect(f'/user/{current_user.id}')
     return render_template("index.html")
 
 
@@ -36,7 +39,7 @@ def login():
         return render_template('login.html',
                                message="Неправильный логин или пароль",
                                form=form)
-    return render_template('login.html', title='Авторизация', form=form)
+    return render_template('login.html', form=form)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -44,12 +47,12 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         if form.password.data != form.password_again.data:
-            return render_template('register.html', title='Регистрация',
+            return render_template('register.html',
                                    form=form,
                                    message="Пароли не совпадают")
         db_sess = db_session.create_session()
         if db_sess.query(User).filter(User.email == form.email.data).first():
-            return render_template('register.html', title='Регистрация',
+            return render_template('register.html',
                                    form=form,
                                    message="Такой пользователь уже есть")
         user = User(
@@ -65,7 +68,32 @@ def register():
         db_sess.commit()
         login_user(user, remember=True)
         return redirect('/')
-    return render_template('register.html', title='Регистрация', form=form)
+    return render_template('register.html', form=form)
+
+
+@app.route('/user/<int:user_id>')
+@login_required
+def user_page(user_id):
+    db_sess = db_session.create_session()
+    user = db_sess.query(User).filter(user_id == User.id).first()
+    if user:
+        return render_template('user_page.html', user=user)
+    else:
+        abort(404)
+
+
+@app.route('/edit_user/<int:user_id>')
+@login_required
+def edit_user(user_id):
+    if user_id != current_user.id:
+        return redirect('/logout')
+    db_sess = db_session.create_session()
+    user = db_sess.query(User).filter(user_id == User.id).first()
+    if user:
+        form = EditUserForm()
+        return render_template('edit_user.html', user=user, form=form)
+    else:
+        abort(404)
 
 
 @app.route('/logout')
