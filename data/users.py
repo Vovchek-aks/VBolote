@@ -24,6 +24,7 @@ class User(SqlAlchemyBase, UserMixin, SerializerMixin):
                                     default='')
     frog_attitude = sqlalchemy.Column(sqlalchemy.String, nullable=False,
                                       default='')
+    pic = sqlalchemy.Column(sqlalchemy.Integer, default=0)
 
     # jobs = orm.relation("Job")
 

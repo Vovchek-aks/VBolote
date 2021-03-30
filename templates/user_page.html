@@ -7,7 +7,7 @@
 <p>О себе: {{user.about}}</p>
 
 {% if current_user.is_authenticated and current_user.id == user.id %}
-    <a href="/edit_user/{{current_user.id}}", class="btn btn-primary">Редактировать</a>
+    <a href="/edit_user", class="btn btn-primary">Редактировать</a>
 {% endif %}
 
 {% endblock %}

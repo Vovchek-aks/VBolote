@@ -82,18 +82,30 @@ def user_page(user_id):
         abort(404)
 
 
-@app.route('/edit_user/<int:user_id>')
+@app.route('/edit_user', methods=['GET', 'POST'])
 @login_required
-def edit_user(user_id):
-    if user_id != current_user.id:
-        return redirect('/logout')
-    db_sess = db_session.create_session()
-    user = db_sess.query(User).filter(user_id == User.id).first()
-    if user:
-        form = EditUserForm()
-        return render_template('edit_user.html', user=user, form=form)
+def edit_user():
+    form = EditUserForm()
+    if form.validate_on_submit():
+        print(123)
+        user2 = User(
+            name=form.name.data,
+            au_attitude=form.au_attitude.data,
+            frog_attitude=form.frog_attitude.data,
+            about=form.about.data,
+        )
+        print(form.pic.data)
+        # db_sess.add(user)
+        # db_sess.commit()
+        # return redirect('/')
+        return redirect('/')
     else:
-        abort(404)
+        db_sess = db_session.create_session()
+        user = db_sess.query(User).filter(current_user.id == User.id).first()
+        if user:
+            return render_template('edit_user.html', user=user, form=form)
+        else:
+            abort(404)
 
 
 @app.route('/logout')
