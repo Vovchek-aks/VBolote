@@ -86,23 +86,23 @@ def user_page(user_id):
 @login_required
 def edit_user():
     form = EditUserForm()
+    db_sess = db_session.create_session()
+    user = db_sess.query(User).filter(current_user.id == User.id).first()
     if form.validate_on_submit():
-        print(123)
-        user2 = User(
-            name=form.name.data,
-            au_attitude=form.au_attitude.data,
-            frog_attitude=form.frog_attitude.data,
-            about=form.about.data,
-        )
-        print(form.pic.data)
-        # db_sess.add(user)
-        # db_sess.commit()
-        # return redirect('/')
+        user.name = form.name.data
+        user.au_attitude = form.au_attitude.data
+        user.frog_attitude = form.frog_attitude.data
+        user.about = form.about.data
+        user.id = current_user.id
+        db_sess.merge(user)
+        db_sess.commit()
         return redirect('/')
     else:
-        db_sess = db_session.create_session()
-        user = db_sess.query(User).filter(current_user.id == User.id).first()
         if user:
+            form.name.data = user.name
+            form.about.data = user.about
+            form.au_attitude.data = user.au_attitude
+            form.frog_attitude.data = user.frog_attitude
             return render_template('edit_user.html', user=user, form=form)
         else:
             abort(404)
