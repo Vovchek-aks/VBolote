@@ -2,7 +2,8 @@
 
 {% block content %}
 
-{{ form.hidden_tag() }}
+<form action="" method="post">
+    {{ form.hidden_tag() }}
     <p>
         {{ form.name.label }}<br>
         {{ form.name(class="form-control") }}<br>
@@ -12,7 +13,7 @@
             </p>
         {% endfor %}
     </p>
-<p>
+    <p>
         {{ form.pic.label }}<br>
         {{ form.pic(type="file") }}<br>
         {% for error in form.pic.errors %}
@@ -52,5 +53,5 @@
     <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
 
     {{message}}
-
+</form>
 {% endblock %}
