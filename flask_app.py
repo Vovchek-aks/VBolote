@@ -14,22 +14,37 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
+class FM:
+    @staticmethod
+    def is_friends(id1, id2):
+        db_sess = db_session.create_session()
+        return (id2,) in db_sess.query(Friends.u_id2).filter(Friends.u_id1 == id1).all() or \
+               (id1,) in db_sess.query(Friends.u_id2).filter(Friends.u_id1 == id2).all()
+
+    @staticmethod
+    def user_friends(u_id):
+        db_sess = db_session.create_session()
+        return list(map(lambda x: x[0], db_sess.query(Friends.u_id2).filter(Friends.u_id1 == u_id).all() + \
+                        db_sess.query(Friends.u_id1).filter(Friends.u_id2 == u_id).all()))
+
+    @staticmethod
+    def id_fr(id1, id2):
+        db_sess = db_session.create_session()
+        n1 = db_sess.query(Friends).filter(Friends.u_id1 == id1).all()
+        n2 = db_sess.query(Friends).filter(Friends.u_id1 == id2).all()
+        for i in n1:
+            if id2 == i.u_id2:
+                return i.id
+        for i in n2:
+            if id1 == i.u_id2:
+                return i.id
+        return -1
+
+
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
     return db_sess.query(User).get(user_id)
-
-
-def is_friends(id1, id2):
-    db_sess = db_session.create_session()
-    return (id2,) in db_sess.query(Friends.u_id2).filter(Friends.u_id1 == id1).all() or \
-           (id1,) in db_sess.query(Friends.u_id2).filter(Friends.u_id1 == id2).all()
-
-
-def user_friends(u_id):
-    db_sess = db_session.create_session()
-    return list(map(lambda x: x[0], db_sess.query(Friends.u_id2).filter(Friends.u_id1 == u_id).all() + \
-                    db_sess.query(Friends.u_id1).filter(Friends.u_id2 == u_id).all()))
 
 
 @app.route('/')
@@ -90,7 +105,7 @@ def user_page(user_id):
     db_sess = db_session.create_session()
     user = db_sess.query(User).filter(user_id == User.id).first()
     if user:
-        return render_template('user_page.html', user=user, is_friends=is_friends(current_user.id, user.id))
+        return render_template('user_page.html', user=user, is_friends=FM.is_friends(current_user.id, user.id))
     else:
         abort(404)
 
@@ -155,7 +170,6 @@ def not_found(error):
 
 def main():
     db_session.global_init("db/user.db")
-    print(user_friends(2))
     app.run(debug=True)
 
 
