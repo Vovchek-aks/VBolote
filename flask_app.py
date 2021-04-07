@@ -149,6 +149,17 @@ def add_friend(user_id):
     return redirect(f"/user/{user_id}")
 
 
+@app.route('/del_friend/<int:user_id>')
+@login_required
+def del_friend(user_id):
+    db_sess = db_session.create_session()
+    fr = db_sess.query(Friends).filter(Friends.id == FM.id_fr(current_user.id, user_id)).first()
+    if fr:
+        db_sess.delete(fr)
+        db_sess.commit()
+    return redirect(f"/user/{user_id}")
+
+
 @app.route('/logout')
 @login_required
 def logout():
