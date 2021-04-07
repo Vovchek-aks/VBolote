@@ -108,6 +108,13 @@ def edit_user():
             abort(404)
 
 
+@app.route('/add_friend/<int:user_id>')
+@login_required
+def add_friend(user_id):
+    logout_user()
+    return redirect(f"/users/{user_id}")
+
+
 @app.route('/logout')
 @login_required
 def logout():

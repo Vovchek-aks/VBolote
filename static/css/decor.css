@@ -160,6 +160,7 @@ h1 {
 }
 
 .card:hover{
+    background-color: #4CAF50;
     text-underline: none;
     text-decoration: none;
 }
