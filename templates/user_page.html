@@ -4,14 +4,21 @@
 
 <br>
 
-<p><img src="../static/img/pics/pic{{user.pic}}.jpg" class="user_pic" alt="аватарка"/></p>
+<p><img src="../static/img/pics/pic{{user.pic}}.jpg" class="user_pic" alt="аватарка"/>
+    {% if current_user.is_authenticated and current_user.id == user.id %}
+        <a href="/edit_user", class="btn btn-primary">Редактировать</a>
+    {% endif %}
+</p>
+
 
 <h1>{{user.name}}</h1><br>
 
+{% if user.about %}
 <p class="about_info">{{user.about}}</p>
+{% endif %}
 
-{% if current_user.is_authenticated and current_user.id == user.id %}
-    <a href="/edit_user", class="btn btn-primary">Редактировать</a>
+{% if current_user.is_authenticated and not current_user.id == user.id %}
+    <button class="btn btn-primary">Дружить с жабой</button>
 {% endif %}
 
 {% endblock %}

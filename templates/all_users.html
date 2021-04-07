@@ -5,13 +5,14 @@
     <div class="row row-cols-1 row-cols-md-4 g-4">
     {% for user in users %}
         <div class="col">
+        <a href="/user/{{ user.id }}">
         <div class="card">
-            <img src="../static/img/pics/pic{{user.pic}}.jpg" width = "100" class="add_friend_pic" alt="...">
+            <img src="../static/img/pics/pic{{user.pic}}.jpg" class="add_friend_pic" alt="...">
             <div class="card-body">
                 <h5 class="card-title">{{ user.name }}</h5><br>
-                <button type="button" class="btn btn-success">Дружить с жабой</button>
             </div>
         </div><br>
+        </a>
         </div>
     {% endfor %}
     </div>

@@ -147,6 +147,7 @@ h1 {
 
 .card{
     background-color: #c4ccaf;
+    text-decoration: none;
 }
 
 .card-text{
@@ -155,10 +156,21 @@ h1 {
 
 .card-title{
     color: black;
+    text-decoration: none;
+}
+
+.card:hover{
+    text-underline: none;
+    text-decoration: none;
 }
 
 .card-group{
     background-color: #5e6943;
+}
+
+a.card:hover{
+    background-color: #4CAF50;
+    text-decoration: #dddddd;
 }
 
 .user_pic {
@@ -177,6 +189,8 @@ h1 {
     webkit-border-radius: 6px;
     moz-border-radius: 6px;
     khtml-border-radius: 6px;
+    padding-left: 3px;
+    padding-top: 3px;
 }
 
 .mini_user_pic {
