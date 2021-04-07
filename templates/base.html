@@ -20,7 +20,7 @@
             {% if current_user.is_authenticated %}
                 <div class="dropdown-content">
                     <a href="/user/{{current_user.id}}">Моё болото</a>
-                    <a href="#">Link 2</a>
+                    <a href="/all_users">Все в болоте</a>
                     <a href="#">Link 3</a>
                 </div>
             {% endif %}
@@ -31,7 +31,7 @@
             {% if current_user.is_authenticated %}
 
                 <a class="navbar-brand" href="/logout" style="color: whitesmoke">
-                    <img src="../static/img/pics/pic{{current_user.pic}}.jpg" height="32" width="32" alt="аватарка"/>
+                    <img src="../static/img/pics/pic{{current_user.pic}}.jpg" class = "mini_user_pic" alt="аватарка"/>
                     {{ current_user.name }}
                 </a>
                 <!--    перенеси в css    -->

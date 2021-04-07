@@ -4,11 +4,11 @@
 
 <br>
 
-<p><img src="../static/img/pics/pic{{user.pic}}.jpg" height="128" width="128" alt="аватарка"/></p>
+<p><img src="../static/img/pics/pic{{user.pic}}.jpg" class="user_pic" alt="аватарка"/></p>
 
-<p>Имя: {{user.name}}</p>
+<h1>{{user.name}}</h1><br>
 
-<p>О себе: {{user.about}}</p>
+<p class="about_info">{{user.about}}</p>
 
 {% if current_user.is_authenticated and current_user.id == user.id %}
     <a href="/edit_user", class="btn btn-primary">Редактировать</a>

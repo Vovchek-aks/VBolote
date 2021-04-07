@@ -115,6 +115,13 @@ def logout():
     return redirect("/")
 
 
+@app.route('/all_users')
+def all_users():
+    db_sess = db_session.create_session()
+    users = db_sess.query(User).all()
+    return render_template('all_users.html', users=users)
+
+
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)

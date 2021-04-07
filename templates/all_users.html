@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <br>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for user in users %}
+        <div class="col">
+        <div class="card">
+            <img src="../static/img/pics/pic{{user.pic}}.jpg" width = "100" class="add_friend_pic" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{ user.name }}</h5><br>
+                <p class="card-text">{{ user.about }}</p><br>
+                <button type="button" class="btn btn-success">Дружить с жабой</button>
+            </div>
+        </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}
