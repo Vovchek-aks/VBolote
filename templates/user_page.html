@@ -17,8 +17,12 @@
 <p class="about_info">{{user.about}}</p>
 {% endif %}
 
-{% if current_user.is_authenticated and not current_user.id == user.id %}
-    <button class="btn btn-primary">Дружить с жабой</button>
+{% if current_user.id != user.id %}
+    {% if not is_friends %}
+        <a class="btn btn-primary" href="/add_friend/{{user.id}}">Дружить с жабой</a>
+    {% else %}
+        <a class="btn btn-danger" href="/del_friend/{{user.id}}">sayonara</a>
+    {% endif %}
 {% endif %}
 
 {% endblock %}

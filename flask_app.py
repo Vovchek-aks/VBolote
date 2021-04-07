@@ -22,8 +22,14 @@ def load_user(user_id):
 
 def is_friends(id1, id2):
     db_sess = db_session.create_session()
-    return (id2, ) in db_sess.query(Friends.u_id2).filter(Friends.u_id1 == id1).all() or \
-           (id1, ) in db_sess.query(Friends.u_id2).filter(Friends.u_id1 == id2).all()
+    return (id2,) in db_sess.query(Friends.u_id2).filter(Friends.u_id1 == id1).all() or \
+           (id1,) in db_sess.query(Friends.u_id2).filter(Friends.u_id1 == id2).all()
+
+
+def user_friends(u_id):
+    db_sess = db_session.create_session()
+    return list(map(lambda x: x[0], db_sess.query(Friends.u_id2).filter(Friends.u_id1 == u_id).all() + \
+                    db_sess.query(Friends.u_id1).filter(Friends.u_id2 == u_id).all()))
 
 
 @app.route('/')
@@ -84,7 +90,7 @@ def user_page(user_id):
     db_sess = db_session.create_session()
     user = db_sess.query(User).filter(user_id == User.id).first()
     if user:
-        return render_template('user_page.html', user=user)
+        return render_template('user_page.html', user=user, is_friends=is_friends(current_user.id, user.id))
     else:
         abort(404)
 
@@ -118,8 +124,14 @@ def edit_user():
 @app.route('/add_friend/<int:user_id>')
 @login_required
 def add_friend(user_id):
-    logout_user()
-    return redirect(f"/users/{user_id}")
+    db_sess = db_session.create_session()
+    fr = Friends(
+        u_id1=current_user.id,
+        u_id2=user_id
+    )
+    db_sess.add(fr)
+    db_sess.commit()
+    return redirect(f"/user/{user_id}")
 
 
 @app.route('/logout')
@@ -138,12 +150,12 @@ def all_users():
 
 @app.errorhandler(404)
 def not_found(error):
-    return make_response(jsonify({'error': 'Not found'}), 404)
+    return make_response(jsonify({'error': f'Not found'}), 404)
 
 
 def main():
     db_session.global_init("db/user.db")
-    is_friends(2, 7)
+    print(user_friends(2))
     app.run(debug=True)
 
 
