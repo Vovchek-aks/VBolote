@@ -13,7 +13,7 @@ class Friends(SqlAlchemyBase, UserMixin, SerializerMixin):
     u_id1 = sqlalchemy.Column(sqlalchemy.Integer)
     u_id2 = sqlalchemy.Column(sqlalchemy.Integer)
 
-    users = orm.relation("users")
+    # users = orm.relation("users")
 
 
 

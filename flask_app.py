@@ -6,6 +6,7 @@ from forms.login import LoginForm
 from forms.register import RegisterForm
 from forms.edit_user import EditUserForm
 from data.users import User
+from data.friends import Friends
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -17,6 +18,12 @@ login_manager.init_app(app)
 def load_user(user_id):
     db_sess = db_session.create_session()
     return db_sess.query(User).get(user_id)
+
+
+def is_friends(id1, id2):
+    db_sess = db_session.create_session()
+    return (id2, ) in db_sess.query(Friends.u_id2).filter(Friends.u_id1 == id1).all() or \
+           (id1, ) in db_sess.query(Friends.u_id2).filter(Friends.u_id1 == id2).all()
 
 
 @app.route('/')
@@ -136,6 +143,7 @@ def not_found(error):
 
 def main():
     db_session.global_init("db/user.db")
+    is_friends(2, 7)
     app.run(debug=True)
 
 
