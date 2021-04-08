@@ -161,8 +161,6 @@ h1 {
 
 .card:hover{
     background-color: #4CAF50;
-    text-underline: none;
-    text-decoration: none;
 }
 
 .card-group{
@@ -198,4 +196,8 @@ a.card:hover{
 Width: 40px;
 Height: 40px;
 border-radius: 50%;
+}
+
+a.navbar-brand:hover {
+    text-decoration-line: underline;
 }
