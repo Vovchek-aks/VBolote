@@ -14,15 +14,6 @@
         {% endfor %}
     </p>
     <p>
-        {{ form.pic.label }}<br>
-        {{ form.pic(type="file") }}<br>
-        {% for error in form.pic.errors %}
-            <p class="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
-        {% endfor %}
-    </p>
-    <p>
         {{ form.about.label }}<br>
         {{ form.about(class="form-control") }}<br>
         {% for error in form.about.errors %}

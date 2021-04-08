@@ -160,18 +160,23 @@ def del_friend(user_id):
     return redirect(f"/user/{user_id}")
 
 
-@app.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    return redirect("/")
-
-
 @app.route('/all_users')
 def all_users():
     db_sess = db_session.create_session()
     users = db_sess.query(User).all()
     return render_template('all_users.html', users=users)
+
+
+@app.route('/choose_ava')
+def choose_ava():
+    return render_template('choose_ava.html')
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect("/")
 
 
 @app.errorhandler(404)
