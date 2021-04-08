@@ -46,6 +46,18 @@
     background-color: #3e8e41;
 }
 
+.scrollspy-example{
+     position: relative;
+    background-color: #c4ccaf;
+    margin-right: 150px;
+    margin-left: 150px;
+    padding: 20px;
+    border-radius: 6px;
+    overflow-y: scroll;
+    height: 500px;
+}
+
+
 body {
     background-color: #acb78e;
     color: aliceblue;
@@ -89,6 +101,45 @@ a.btn-login {
     border-radius: 8px;
     background: #4CAF50;
     transition: 0.2s;
+}
+
+h4.list-item-1{
+    margin-left: 20px;
+}
+
+
+.my-message{
+    display: flex;
+    justify-content: flex-end;
+    background-color: #87a96b;
+    color: white;
+    padding: 10px;
+    margin-left: 600px;
+    margin-right: 20px;
+    border-radius: 6px;
+}
+
+.not-my-message{
+    display: flex;
+    justify-content: flex-start;
+    background-color: cornflowerblue;
+    color: white;
+    padding: 10px;
+    margin-right: 600px;
+    margin-left: 20px;
+    border-radius: 6px;
+}
+
+form.message{
+    margin-left: 150px;
+    margin-right: 150px;
+    background: #c4ccaf;
+    padding: 20px;
+}
+
+input.message-box{
+    overflow-y: scroll;
+    overflow-x: paged-y;
 }
 
 a.btn-reg {

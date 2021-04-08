@@ -3,6 +3,7 @@ from data import db_session
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user, AnonymousUserMixin
 import datetime as dt
 from forms.login import LoginForm
+from forms.message import MessageForm
 from forms.register import RegisterForm
 from forms.edit_user import EditUserForm
 from data.users import User
@@ -165,6 +166,12 @@ def all_users():
     db_sess = db_session.create_session()
     users = db_sess.query(User).all()
     return render_template('all_users.html', users=users)
+
+
+@app.route('/messages', methods=['GET', 'POST'])
+def messages():
+    form = MessageForm()
+    return render_template('messages.html', form=form)
 
 
 @app.route('/choose_ava')
