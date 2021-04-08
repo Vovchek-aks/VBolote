@@ -92,6 +92,20 @@ button {
     transition: 0.2s;
 }
 
+span.user-buttons{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    margin-left: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+p.user-profile{
+    display: flex;
+    justify-content: flex-start;
+}
+
 a.btn-login {
     height: 60px;
     font-weight: 700;
@@ -181,6 +195,7 @@ a.btn-reg:hover {
     border-radius: 8px;
     background: #4CAF50;
     transition: 0.2s;
+    padding: 10px;
     border-color: transparent;
 }
 
@@ -190,11 +205,11 @@ a.btn-reg:hover {
 }
 
 .btn-danger {
-    background-color: red;
+    background-color: maroon;
 }
 
 .btn-danger:hover {
-    background-color: darkred;
+    background-color: #510000;
 }
 
 .btn-success {

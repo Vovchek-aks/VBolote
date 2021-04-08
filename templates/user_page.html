@@ -4,12 +4,14 @@
 
 <br>
 
-<p>
+<p class="user-profile">
     <img src="../static/img/pics/pic{{user.pic}}.jpg" class="user_pic" alt="аватарка"/>
     {% if current_user.id == user.id %}
+        <span class="user-buttons">
         <a href="/choose_ava", class="btn btn-primary">Аватарка</a>
         <a href="/edit_user", class="btn btn-primary">Редактировать</a>
         <a href="/suicide", class="btn btn-danger">Suicide</a>
+        </span>
     {% endif %}
 </p>
 
