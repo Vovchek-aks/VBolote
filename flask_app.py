@@ -172,6 +172,17 @@ def choose_ava():
     return render_template('choose_ava.html')
 
 
+@app.route('/set_ava/<int:ava_id>')
+def set_ava(ava_id):
+    db_sess = db_session.create_session()
+    user = db_sess.query(User).filter(current_user.id == User.id).first()
+    user.pic = ava_id
+    user.id = current_user.id
+    db_sess.merge(user)
+    db_sess.commit()
+    return redirect('/')
+
+
 @app.route('/logout')
 @login_required
 def logout():
