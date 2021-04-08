@@ -46,15 +46,15 @@
     background-color: #3e8e41;
 }
 
-.scrollspy-example{
-     position: relative;
+.scrollspy-example {
+    position: relative;
     background-color: #c4ccaf;
-    margin-right: 150px;
-    margin-left: 150px;
+    margin-right: 250px;
+    margin-left: 250px;
     padding: 20px;
     border-radius: 6px;
     overflow-y: scroll;
-    height: 500px;
+    height: 450px;
 }
 
 
@@ -103,43 +103,53 @@ a.btn-login {
     transition: 0.2s;
 }
 
-h4.list-item-1{
-    margin-left: 20px;
+h4.anya-molodec {
+    margin-left: 250px;
 }
 
 
-.my-message{
+.my-message {
     display: flex;
     justify-content: flex-end;
     background-color: #87a96b;
     color: white;
-    padding: 10px;
-    margin-left: 600px;
-    margin-right: 20px;
+    padding: 6px;
+    margin-left: 300px;
+    margin-right: 10px;
     border-radius: 6px;
 }
 
-.not-my-message{
+.not-my-message {
     display: flex;
     justify-content: flex-start;
     background-color: cornflowerblue;
     color: white;
-    padding: 10px;
-    margin-right: 600px;
-    margin-left: 20px;
+    padding: 6px;
+    margin-right: 300px;
+    margin-left: 10px;
     border-radius: 6px;
 }
 
-form.message{
-    margin-left: 150px;
-    margin-right: 150px;
+form.message {
+    margin-left: 250px;
+    margin-right: 250px;
     background: #c4ccaf;
-    padding: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 0.5px;
+    padding-top: 10px;
+    border-radius: 6px;
 }
 
-input.message-box{
-    overflow-y: scroll;
-    overflow-x: paged-y;
+p.input-message{
+    display: flex;
+    justify-content: flex-start;
+    padding-bottom: 0;
+}
+
+input.send-message{
+    margin-left: 10px;
+    margin-top: 6px;
 }
 
 a.btn-reg {
@@ -179,11 +189,11 @@ a.btn-reg:hover {
     border-color: transparent;
 }
 
-.btn-danger{
+.btn-danger {
     background-color: red;
 }
 
-.btn-danger:hover{
+.btn-danger:hover {
     background-color: darkred;
 }
 
@@ -191,7 +201,7 @@ a.btn-reg:hover {
     border-radius: 6px;
 }
 
-p.about_info{
+p.about_info {
     background-color: #87a96b;
     color: white;
     width: 500px;
@@ -204,29 +214,29 @@ h1 {
     color: white;
 }
 
-.card{
+.card {
     background-color: #c4ccaf;
     text-decoration: none;
 }
 
-.card-text{
+.card-text {
     color: black
 }
 
-.card-title{
+.card-title {
     color: black;
     text-decoration: none;
 }
 
-.card:hover{
+.card:hover {
     background-color: #4CAF50;
 }
 
-.card-group{
+.card-group {
     background-color: #5e6943;
 }
 
-a.card:hover{
+a.card:hover {
     background-color: #4CAF50;
     text-decoration: #dddddd;
 }
@@ -252,9 +262,9 @@ a.card:hover{
 }
 
 .mini_user_pic {
-Width: 40px;
-Height: 40px;
-border-radius: 50%;
+    Width: 40px;
+    Height: 40px;
+    border-radius: 50%;
 }
 
 a.navbar-brand:hover {
