@@ -193,6 +193,15 @@ def friends(user_id):
     return render_template('friends.html', users=users)
 
 
+@app.route('/suicide')
+def suicide():
+    db_sess = db_session.create_session()
+    user = db_sess.query(User).filter(User.id == current_user.id).first()
+    db_sess.delete(user)
+    db_sess.commit()
+    return redirect('/')
+
+
 @app.route('/logout')
 @login_required
 def logout():

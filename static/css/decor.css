@@ -112,7 +112,7 @@ a.btn-reg:hover {
     background-color: #3e8e41;
 }
 
-.btn-primary {
+.btn-primary, .btn-danger {
     height: 50px;
     font-weight: 700;
     color: white;
@@ -123,9 +123,17 @@ a.btn-reg:hover {
     border-color: transparent;
 }
 
-.btn-primary:hover {
+.btn-primary:hover, .btn-danger:hover {
     background-color: #3e8e41;
     border-color: transparent;
+}
+
+.btn-danger{
+    background-color: red;
+}
+
+.btn-danger:hover{
+    background-color: darkred;
 }
 
 .btn-success {
@@ -173,8 +181,8 @@ a.card:hover{
 }
 
 .user_pic {
-    Width: 150px;
-    Height: 150px;
+    Width: 256px;
+    Height: 256px;
     border-radius: 6px;
     webkit-border-radius: 6px;
     moz-border-radius: 6px;

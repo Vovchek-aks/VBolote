@@ -4,10 +4,12 @@
 
 <br>
 
-<p><img src="../static/img/pics/pic{{user.pic}}.jpg" class="user_pic" alt="аватарка"/>
+<p>
+    <img src="../static/img/pics/pic{{user.pic}}.jpg" class="user_pic" alt="аватарка"/>
     {% if current_user.id == user.id %}
         <a href="/choose_ava", class="btn btn-primary">Аватарка</a>
         <a href="/edit_user", class="btn btn-primary">Редактировать</a>
+        <a href="/suicide", class="btn btn-danger">Suicide</a>
     {% endif %}
 </p>
 
@@ -25,5 +27,7 @@
         <a class="btn btn-danger" href="/del_friend/{{user.id}}">sayonara</a>
     {% endif %}
 {% endif %}
+
+    {{ news }}
 
 {% endblock %}
