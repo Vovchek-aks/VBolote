@@ -183,6 +183,16 @@ def set_ava(ava_id):
     return redirect('/')
 
 
+@app.route('/friends/<int:user_id>')
+def friends(user_id):
+    db_sess = db_session.create_session()
+    fr = FM.user_friends(user_id)
+    users = []
+    for i in fr:
+        users += db_sess.query(User).filter(User.id == i).all()
+    return render_template('friends.html', users=users)
+
+
 @app.route('/logout')
 @login_required
 def logout():
