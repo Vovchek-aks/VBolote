@@ -168,12 +168,6 @@ def all_users():
     return render_template('all_users.html', users=users)
 
 
-@app.route('/messages', methods=['GET', 'POST'])
-def messages():
-    form = MessageForm()
-    return render_template('messages.html', form=form)
-
-
 @app.route('/choose_ava')
 def choose_ava():
     return render_template('choose_ava.html')
@@ -207,6 +201,14 @@ def suicide():
     db_sess.delete(user)
     db_sess.commit()
     return redirect('/')
+
+
+@app.route('/messages/<int:user_id>', methods=['GET', 'POST'])
+def messages(user_id):
+    form = MessageForm()
+    db_sess = db_session.create_session()
+    user = db_sess.query(User).filter(User.id == user_id).first()
+    return render_template('messages.html', form=form, user=user)
 
 
 @app.route('/logout')
