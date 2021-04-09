@@ -47,6 +47,8 @@ class MM:
     @staticmethod
     def get_ms_from_id(user_id):
         b_id = FM.id_fr(user_id, current_user.id)
+        if b_id == -1:
+            return None
         db_sess = db_session.create_session()
         all_m = db_sess.query(Messages).filter(Messages.b_id == b_id).all()
 
@@ -225,11 +227,21 @@ def suicide():
 def messages(user_id):
     form = MessageForm()
     db_sess = db_session.create_session()
-    user = db_sess.query(User).filter(User.id == user_id).first()
-    print(123)
-    print(MM.get_ms_from_id(user_id))
-    print(321)
-    return render_template('messages.html', form=form, user=user, messages=MM.get_ms_from_id(user_id))
+    if form.validate_on_submit():
+        m = Messages(
+            u_id=current_user.id,
+            b_id=FM.id_fr(user_id, current_user.id),
+            text=form.message.data
+        )
+        db_sess.add(m)
+        db_sess.commit()
+        return redirect(f'/messages/{user_id}')
+    else:
+        user = db_sess.query(User).filter(User.id == user_id).first()
+        msgs = MM.get_ms_from_id(user_id)
+        if msgs is None:
+            return redirect('/')
+        return render_template('messages.html', form=form, user=user, messages=msgs)
 
 
 @app.route('/logout')
