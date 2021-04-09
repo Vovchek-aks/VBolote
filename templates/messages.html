@@ -23,21 +23,13 @@
 <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-offset="0"
      class="scrollspy-example" tabindex="0">
   <div class="message-block">
-      <p class="my-message">ээээээээээээ</p>
-      <p class="not-my-message">эээээ</p>
-      <p class="not-my-message">эммм ну как вам сказать</p>
-      <p class="not-my-message">аллах акбар</p>
-      <p class="my-message">ты долбоеб?</p>
-      <p class="my-message">ээээээээээээ</p>
-      <p class="not-my-message">эээээ</p>
-      <p class="not-my-message">эммм ну как вам сказать</p>
-      <p class="not-my-message">аллах акбар</p>
-      <p class="my-message">ты долбоеб?</p>
-      <p class="my-message">ээээээээээээ</p>
-      <p class="not-my-message">эээээ</p>
-      <p class="not-my-message">эммм ну как вам сказать</p>
-      <p class="not-my-message">аллах акбар</p>
-      <p class="my-message">ты долбоеб?</p>
+      {% for mes in messages %}
+          {% if mes[1] %}
+              <p class="my-message">{{mes[0].text}}</p>
+          {% else %}
+              <p class="not-my-message">{{mes[0].text}}</p>
+          {% endif %}
+      {% endfor %}
   </div>
 </div>
 {% endblock %}

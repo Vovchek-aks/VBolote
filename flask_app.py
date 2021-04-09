@@ -8,6 +8,7 @@ from forms.register import RegisterForm
 from forms.edit_user import EditUserForm
 from data.users import User
 from data.friends import Friends
+from data.messages import Messages
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -40,6 +41,23 @@ class FM:
             if id1 == i.u_id2:
                 return i.id
         return -1
+
+
+class MM:
+    @staticmethod
+    def get_ms_from_id(user_id):
+        b_id = FM.id_fr(user_id, current_user.id)
+        db_sess = db_session.create_session()
+        all_m = db_sess.query(Messages).filter(Messages.b_id == b_id).all()
+
+        if all_m is None:
+            all_m = []
+        else:
+            all_m = list(all_m)
+
+        all_m.sort(key=lambda x: -x.id)
+        all_m = map(lambda x: (x, x.u_id == current_user.id), all_m)
+        return all_m
 
 
 @login_manager.user_loader
@@ -208,7 +226,10 @@ def messages(user_id):
     form = MessageForm()
     db_sess = db_session.create_session()
     user = db_sess.query(User).filter(User.id == user_id).first()
-    return render_template('messages.html', form=form, user=user)
+    print(123)
+    print(MM.get_ms_from_id(user_id))
+    print(321)
+    return render_template('messages.html', form=form, user=user, messages=MM.get_ms_from_id(user_id))
 
 
 @app.route('/logout')
