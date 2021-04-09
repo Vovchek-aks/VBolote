@@ -54,7 +54,7 @@
     padding: 20px;
     border-radius: 6px;
     overflow-y: scroll;
-    height: 450px;
+    height: 600px;
 }
 
 
@@ -164,6 +164,10 @@ p.input-message{
 input.send-message{
     margin-left: 10px;
     margin-top: 6px;
+}
+
+textarea.message-box{
+    min-height: 60px;
 }
 
 a.btn-reg {

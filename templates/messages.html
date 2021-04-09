@@ -6,13 +6,18 @@
 
 {% block content %}
 <br>
-  <h4 class="anya-molodec"><img src="../static/img/pics/pic{{current_user.pic}}.jpg" class = "mini_user_pic" alt="аватарка"/> USER</h4>
+  <h4 class="anya-molodec">
+      <img src="../static/img/pics/pic{{user.pic}}.jpg" class = "mini_user_pic" alt="аватарка"/>
+      {{user.name}}
+  </h4>
     <div>
     <form class="message" action="" method="post">
-    {{ form.hidden_tag() }}
-    <p class="input-message">
-        {{ form.message(class="form-control message-box") }} {{ form.submit(type="submit", class="btn btn-primary send-message") }}</p>
-</form></div>
+        {{ form.hidden_tag() }}
+        <p class="input-message">
+            {{ form.message(class="form-control message-box") }} {{ form.submit(type="submit", class="btn btn-primary send-message") }}
+        </p>
+    </form>
+    </div>
 <br>
 
 <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-offset="0"
