@@ -176,6 +176,10 @@ def del_friend(user_id):
     db_sess = db_session.create_session()
     fr = db_sess.query(Friends).filter(Friends.id == FM.id_fr(current_user.id, user_id)).first()
     if fr:
+        m = db_sess.query(Messages).filter(Messages.b_id == fr.id).all()
+        if m:
+            for i in m:
+                db_sess.delete(i)
         db_sess.delete(fr)
         db_sess.commit()
     return redirect(f"/user/{user_id}")
