@@ -6,9 +6,11 @@ from forms.login import LoginForm
 from forms.message import MessageForm
 from forms.register import RegisterForm
 from forms.edit_user import EditUserForm
+from forms.make_news import NewsForm
 from data.users import User
 from data.friends import Friends
 from data.messages import Messages
+from data.news import News
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -120,13 +122,25 @@ def register():
     return render_template('register.html', form=form)
 
 
-@app.route('/user/<int:user_id>')
+@app.route('/user/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 def user_page(user_id):
+    form = NewsForm()
     db_sess = db_session.create_session()
     user = db_sess.query(User).filter(user_id == User.id).first()
+    if form.validate_on_submit():
+        new = News(
+            u_id=current_user.id,
+            text=form.text.data
+        )
+        db_sess.add(new)
+        db_sess.commit()
+        return redirect('/')
     if user:
-        return render_template('user_page.html', user=user, is_friends=FM.is_friends(current_user.id, user.id))
+        news = db_sess.query(News).filter(News.u_id == user.id).all()
+        return render_template('user_page.html', user=user, is_friends=FM.is_friends(current_user.id, user.id),
+                               form=form,
+                               news=(news[::-1] if news else []))
     else:
         abort(404)
 
@@ -186,6 +200,7 @@ def del_friend(user_id):
 
 
 @app.route('/all_users')
+@login_required
 def all_users():
     db_sess = db_session.create_session()
     users = db_sess.query(User).all()
@@ -193,11 +208,13 @@ def all_users():
 
 
 @app.route('/choose_ava')
+@login_required
 def choose_ava():
     return render_template('choose_ava.html')
 
 
 @app.route('/set_ava/<int:ava_id>')
+@login_required
 def set_ava(ava_id):
     db_sess = db_session.create_session()
     user = db_sess.query(User).filter(current_user.id == User.id).first()
@@ -209,6 +226,7 @@ def set_ava(ava_id):
 
 
 @app.route('/friends/<int:user_id>')
+@login_required
 def friends(user_id):
     db_sess = db_session.create_session()
     fr = FM.user_friends(user_id)
@@ -219,6 +237,7 @@ def friends(user_id):
 
 
 @app.route('/suicide')
+@login_required
 def suicide():
     db_sess = db_session.create_session()
     user = db_sess.query(User).filter(User.id == current_user.id).first()
@@ -228,6 +247,7 @@ def suicide():
 
 
 @app.route('/messages/<int:user_id>', methods=['GET', 'POST'])
+@login_required
 def messages(user_id):
     form = MessageForm()
     db_sess = db_session.create_session()
@@ -246,6 +266,17 @@ def messages(user_id):
         if msgs is None:
             return redirect('/')
         return render_template('messages.html', form=form, user=user, messages=msgs)
+
+
+@app.route('/del_new/<int:new_id>')
+@login_required
+def del_new(new_id):
+    db_sess = db_session.create_session()
+    new = db_sess.query(News).filter(News.id == new_id).first()
+    if new:
+        db_sess.delete(new)
+        db_sess.commit()
+    return redirect("/")
 
 
 @app.route('/logout')

@@ -6,17 +6,17 @@
 
 {% block content %}
 <br>
-  <h4 class="anya-molodec">
-      <img src="../static/img/pics/pic{{user.pic}}.jpg" class = "mini_user_pic" alt="аватарка"/>
-      <a href="/user/{{user.id}}" style="color: white">{{user.name}}</a>
-  </h4>
+    <h4 class="anya-molodec">
+        <img src="../static/img/pics/pic{{user.pic}}.jpg" class = "mini_user_pic" alt="аватарка"/>
+        <a href="/user/{{user.id}}" style="color: white">{{user.name}}</a>
+    </h4>
     <div>
-    <form class="message" action="" method="post">
-        {{ form.hidden_tag() }}
-        <p class="input-message">
-            {{ form.message(class="form-control message-box") }} {{ form.submit(type="submit", class="btn btn-primary send-message") }}
-        </p>
-    </form>
+        <form class="message" action="" method="post">
+            {{ form.hidden_tag() }}
+            <p class="input-message">
+                {{ form.message(class="form-control message-box") }} {{ form.submit(type="submit", class="btn btn-primary send-message") }}
+            </p>
+        </form>
     </div>
 <br>
 

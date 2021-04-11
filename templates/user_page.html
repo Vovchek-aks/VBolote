@@ -10,6 +10,7 @@
         <span class="user-buttons">
         <a href="/choose_ava", class="btn btn-primary">Аватарка</a>
         <a href="/edit_user", class="btn btn-primary">Редактировать</a>
+<!--        <a href="/add_news", class="btn btn-primary">Жабья весть</a>-->
         <a href="/suicide", class="btn btn-danger">Suicide</a>
         </span>
     {% else %}
@@ -31,6 +32,30 @@
 <p class="about_info">{{user.about}}</p>
 {% endif %}
 
-    {{ news }}
+{% if user == current_user %}
+<br>
+    <div>
+        <form class="news_text" action="" method="post">
+            <h6>Жабья весть</h6>
+            {{ form.hidden_tag() }}
+            <p class="input-message">
+                {{ form.text(class="form-control message-box") }} {{ form.submit(type="submit", class="btn btn-primary send-message") }}
+            </p>
+        </form>
+    </div>
+{% endif %}
+
+<br>
+
+{% for new in news %}
+    <p class="not-my-message">
+        {{new.text}}
+        <span style="margin-left: 50px">
+        {% if new.u_id == current_user.id %}
+            <a class="btn btn-danger" href="/del_new/{{new.id}}">Разжабить</a>
+        {% endif %}
+        </span>
+    </p>
+{% endfor %}
 
 {% endblock %}
