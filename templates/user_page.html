@@ -48,14 +48,19 @@
 <br>
 
 {% for new in news %}
-    <p class="not-my-message">
+    <div class="not-my-message">
+        <h4 style="margin-right: 100px">
+            <img src="../static/img/pics/pic{{user.pic}}.jpg" class = "mini_user_pic" alt="аватарка"/>
+            <a href="/user/{{user.id}}" style="color: white">{{user.name}}</a>
+        </h4>
         {{new.text}}
         <span style="margin-left: 50px">
         {% if new.u_id == current_user.id %}
             <a class="btn btn-danger" href="/del_new/{{new.id}}">Разжабить</a>
         {% endif %}
         </span>
-    </p>
+    </div>
+    <br>
 {% endfor %}
 
 {% endblock %}

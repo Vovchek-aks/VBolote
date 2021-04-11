@@ -279,6 +279,20 @@ def del_new(new_id):
     return redirect("/")
 
 
+@app.route('/news')
+@login_required
+def news():
+    db_sess = db_session.create_session()
+    newss = []
+    for i in FM.user_friends(current_user.id):
+        _news = db_sess.query(News).filter(News.u_id == i).all()
+        if _news:
+            for new in _news:
+                newss += [(new, db_sess.query(User).filter(User.id == i).first())]
+    print(newss)
+    return render_template('news.html', news=newss)
+
+
 @app.route('/logout')
 @login_required
 def logout():
