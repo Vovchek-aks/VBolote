@@ -293,6 +293,25 @@ def news():
     return render_template('news.html', news=newss)
 
 
+@app.route('/dislike/<int:new_id>/<string:fr>')
+@login_required
+def dislike(new_id, fr):
+    db_sess = db_session.create_session()
+    new = db_sess.query(News).filter(News.id == new_id).first()
+    if new:
+        new.id = new_id
+        new.dislikes += 1
+        db_sess.merge(new)
+        db_sess.commit()
+
+    if fr == '0':
+        return redirect("/")
+    elif fr == '-1':
+        return redirect('/news')
+    else:
+        return redirect(f'/user/{fr}')
+
+
 @app.route('/logout')
 @login_required
 def logout():

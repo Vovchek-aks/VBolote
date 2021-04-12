@@ -16,6 +16,13 @@
             <a href="/user/{{new[1].id}}" style="color: white">{{new[1].name}}</a>
         </h4>
         {{new[0].text}}
+        <span style="margin-left: 50px">
+        {% if new.u_id != current_user.id %}
+            <a class="btn btn-danger" href="/dislike/{{new[0].id}}/-1">Нежабно</a>
+        {% endif %}
+
+        <span style="color: red">{{new[0].dislikes}}</span>
+        </span>
     </div>
     <br>
 {% endfor %}

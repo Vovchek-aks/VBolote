@@ -57,7 +57,11 @@
         <span style="margin-left: 50px">
         {% if new.u_id == current_user.id %}
             <a class="btn btn-danger" href="/del_new/{{new.id}}">Разжабить</a>
+        {% else %}
+            <a class="btn btn-danger" href="/dislike/{{new.id}}/{{0 if user.id == current_user.id else user.id}}">Нежабно</a>
         {% endif %}
+
+        <span style="color: red">{{new.dislikes}}</span>
         </span>
     </div>
     <br>
