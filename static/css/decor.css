@@ -92,6 +92,14 @@ button {
     transition: 0.2s;
 }
 
+button.user{
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+}
+
 span.user-buttons{
     display: flex;
     justify-content: space-around;
@@ -121,6 +129,9 @@ h4.anya-molodec {
     margin-left: 250px;
 }
 
+h4.news-user{
+    padding: 10px;
+}
 
 .my-message {
     display: flex;
@@ -142,6 +153,44 @@ h4.anya-molodec {
     margin-right: 300px;
     margin-left: 10px;
     border-radius: 6px;
+}
+
+.news {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    margin-left: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 6px;
+    border-radius: 6px;
+}
+
+.news-bottom-part{
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px;
+}
+
+.news-text{
+    padding-left: 10px;
+}
+
+.news-username{
+    color: white;
+}
+
+.news-username:hover{
+    color: white;
+}
+
+.dislikes-number {
+    padding-top: 8px;
+    padding-left: 10px;
+    color: #510000;
+    font: bold 2em Arial;
 }
 
 form.message {
@@ -230,12 +279,20 @@ a.btn-reg:hover {
     border-radius: 6px;
 }
 
+a.dislike {
+    display: flex;
+    justify-content: flex-start;
+    width: 100px;
+    /*margin-left: -100px;*/
+}
+
 p.about_info {
     background-color: #87a96b;
     color: white;
     width: 500px;
     min-width: 350px;
     padding: 10px;
+    border-radius: 6px;
     -webkit-box-sizing: border-box;
 }
 
