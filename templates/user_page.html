@@ -48,20 +48,20 @@
 <br>
 
 {% for new in news %}
-    <div class="not-my-message">
-        <h4 style="margin-right: 100px">
+    <div class="news">
+        <h4 class="news-user">
             <img src="../static/img/pics/pic{{user.pic}}.jpg" class = "mini_user_pic" alt="аватарка"/>
             <a href="/user/{{user.id}}" style="color: white">{{user.name}}</a>
         </h4>
-        {{new.text}}
-        <span style="margin-left: 50px">
+        <span class="news-text">{{new.text}}</span>
+        <span><br>
         {% if new.u_id == current_user.id %}
             <a class="btn btn-danger" href="/del_new/{{new.id}}">Разжабить</a>
         {% else %}
             <a class="btn btn-danger" href="/dislike/{{new.id}}/{{0 if user.id == current_user.id else user.id}}">Нежабно</a>
         {% endif %}
 
-        <span style="color: red">{{new.dislikes}}</span>
+        <span class="dislikes-number">{{new.dislikes}}</span>
         </span>
     </div>
     <br>

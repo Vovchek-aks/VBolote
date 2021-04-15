@@ -18,7 +18,7 @@
         <div class="dropdown">
           <button class="dropbtn">Болото</button>
             {% if current_user.is_authenticated %}
-                <div class="dropdown-content">
+                <div class="dropdown-content" style="width: 160px">
                     <a href="/user/{{current_user.id}}">Моё болото</a>
                     <a href="/all_users">Все в болоте</a>
                     <a href="/friends/{{ current_user.id }}">Мои джабья</a>
@@ -37,12 +37,11 @@
                       {{ current_user.name }}
                   </button>
                     <div class="dropdown-content">
-                        <a href="/logout" style="background-color: #510000">Выход</a>
+                        <a href="/logout">Выход</a>
                         <a href="/edit_user">Настройки</a>
                         <a href="/choose_ava">Аватарка</a>
                     </div>
                 </div>
-                <!--    перенеси в css    -->
 
             {% else %}
 
