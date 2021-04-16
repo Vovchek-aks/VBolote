@@ -331,7 +331,7 @@ a.card:hover {
 .user_pic {
     Width: 256px;
     Height: 256px;
-    border-radius: 6px;
+    border-radius: 20%;
     webkit-border-radius: 6px;
     moz-border-radius: 6px;
     khtml-border-radius: 6px;
@@ -356,4 +356,8 @@ a.card:hover {
 
 a.navbar-brand:hover {
     text-decoration-line: underline;
+}
+
+img.choose_ava {
+    padding: 10px;
 }
