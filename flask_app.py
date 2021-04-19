@@ -246,6 +246,14 @@ def suicide():
     return redirect('/')
 
 
+@app.route('/frog_lottery')
+@login_required
+def frog_lottery():
+    db_sess = db_session.create_session()
+    users = db_sess.query(User).all()
+    return render_template('frogs.html', users=users)
+
+
 @app.route('/messages/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 def messages(user_id):

@@ -194,6 +194,37 @@ h4.news-user{
     font: bold 2em Arial;
 }
 
+span.number_choose{
+    display: flex;
+    justify-content: space-around;
+    margin-right: 30px;
+    margin-left: 37px;
+}
+
+a.nokia {
+    display: flex;
+    background-color: #606d78;
+    margin-top: 8px;
+    margin: -2px 7px -33px;
+    font-size: 30px;
+    min-width: 90px;
+    max-height: 45px;
+    justify-content: center;
+    align-items: center;
+}
+
+a.nokia:hover {
+    background-color: transparent;
+    color: transparent;
+}
+
+h5.FIO{
+    color: #87a96b;
+    display: flex;
+    justify-content: center;
+    font-size: 33px;
+}
+
 form.message {
     margin-left: 250px;
     margin-right: 250px;
