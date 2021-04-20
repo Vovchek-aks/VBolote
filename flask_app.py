@@ -64,6 +64,12 @@ class MM:
         return all_m
 
 
+class ZhM:
+    @staticmethod
+    def all_zh():
+        pass
+
+
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
@@ -246,14 +252,6 @@ def suicide():
     return redirect('/')
 
 
-@app.route('/frog_lottery')
-@login_required
-def frog_lottery():
-    db_sess = db_session.create_session()
-    users = db_sess.query(User).all()
-    return render_template('frogs.html', users=users)
-
-
 @app.route('/messages/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 def messages(user_id):
@@ -318,6 +316,18 @@ def dislike(new_id, fr):
         return redirect('/news')
     else:
         return redirect(f'/user/{fr}')
+
+
+@app.route('/frog_lottery')
+@login_required
+def frog_lottery():
+    return render_template('frogs.html')
+
+
+@app.route('/open_frog/<int:ps>/<int:zh_id>')
+@login_required
+def frog_lottery(ps, zh_id):
+    return render_template('frogs.html')
 
 
 @app.route('/logout')
