@@ -376,6 +376,21 @@ def not_found(error):
     return make_response(jsonify({'error': f'Not found'}), 404)
 
 
+@app.route('/api/all_users')
+@login_required
+def release_frog(zh_id):
+    db_sess = db_session.create_session()
+    users = db_sess.query(User).all()
+    ret = []
+    for i in users:
+        ret += [{
+            'name': i.name,
+            'about': i.about
+        }]
+
+    return jsonify(ret)
+
+
 def main():
     db_session.global_init("db/user.db")
     app.run(debug=True)
