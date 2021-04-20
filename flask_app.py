@@ -325,7 +325,9 @@ def dislike(new_id, fr):
 @app.route('/frog_lottery')
 @login_required
 def frog_lottery():
-    return render_template('frogs.html')
+    db_sess = db_session.create_session()
+    frogs = db_sess.query(Zhaba).filter(Zhaba.u_id == 0).all()
+    return render_template('frogs.html', frogs=frogs)
 
 
 @app.route('/open_frog/<int:pw>/<int:zh_id>')

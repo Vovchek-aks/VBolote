@@ -12,7 +12,9 @@ class Zhaba(SqlAlchemyBase, UserMixin, SerializerMixin):
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
 
-    name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    name1 = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    name2 = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    name3 = sqlalchemy.Column(sqlalchemy.String, nullable=True)
 
     pw = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
 
