@@ -378,7 +378,7 @@ def not_found(error):
 
 @app.route('/api/all_users')
 @login_required
-def release_frog(zh_id):
+def api_users(zh_id):
     db_sess = db_session.create_session()
     users = db_sess.query(User).all()
     ret = []
