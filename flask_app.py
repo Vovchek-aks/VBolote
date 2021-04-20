@@ -150,7 +150,8 @@ def user_page(user_id):
         return render_template('user_page.html', user=user, is_friends=FM.is_friends(current_user.id, user.id),
                                form=form,
                                news=(news[::-1] if news else []),
-                               zh_c=len(ZhM.all_zh(user_id)))
+                               # zh_c=len(ZhM.all_zh(user_id))
+                               )
     else:
         abort(404)
 
@@ -378,7 +379,7 @@ def not_found(error):
 
 @app.route('/api/all_users')
 @login_required
-def api_users(zh_id):
+def api_users():
     db_sess = db_session.create_session()
     users = db_sess.query(User).all()
     ret = []

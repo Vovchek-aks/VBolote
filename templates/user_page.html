@@ -28,11 +28,19 @@
 
 <h1>{{user.name}}</h1><br>
 
-<a><p class="about_info">Количество жаб: {{ zh_c }}</p></a>
-
 {% if user.about %}
 <p class="about_info">{{user.about}}</p>
 {% endif %}
+
+{% if user.au_attitude %}
+<p class="about_info">Отношение к Андрею Юрьевичу: <br><br>{{user.au_attitude}}</p>
+{% endif %}
+
+{% if user.frog_attitude %}
+<p class="about_info">Отношение к жабам и лягушкам: <br><br>{{user.frog_attitude}}</p>
+{% endif %}
+
+<a><p class="about_info">Количество жаб: {{ zh_c }}</p></a>
 
 {% if user == current_user %}
 <br>
