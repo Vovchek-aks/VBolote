@@ -11,6 +11,8 @@ from data.users import User
 from data.friends import Friends
 from data.messages import Messages
 from data.news import News
+from data.zhabs import Zhaba
+from random import randint
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -66,8 +68,9 @@ class MM:
 
 class ZhM:
     @staticmethod
-    def all_zh():
-        pass
+    def all_zh(u_id):
+        db_sess = db_session.create_session()
+        return db_sess.query(Zhaba).filter(Zhaba.u_id == u_id).all()
 
 
 @login_manager.user_loader
@@ -146,7 +149,8 @@ def user_page(user_id):
         news = db_sess.query(News).filter(News.u_id == user.id).all()
         return render_template('user_page.html', user=user, is_friends=FM.is_friends(current_user.id, user.id),
                                form=form,
-                               news=(news[::-1] if news else []))
+                               news=(news[::-1] if news else []),
+                               zh_c=len(ZhM.all_zh(user_id)))
     else:
         abort(404)
 
@@ -324,10 +328,38 @@ def frog_lottery():
     return render_template('frogs.html')
 
 
-@app.route('/open_frog/<int:ps>/<int:zh_id>')
+@app.route('/open_frog/<int:pw>/<int:zh_id>')
 @login_required
-def frog_lottery(ps, zh_id):
-    return render_template('frogs.html')
+def open_frog(pw, zh_id):
+    db_sess = db_session.create_session()
+    frog = db_sess.query(Zhaba).filter(Zhaba.id == zh_id).first()
+    if frog:
+        if frog.pw == pw:
+            frog.id = zh_id
+            frog.u_id = current_user.id
+            db_sess.merge(frog)
+        else:
+            db_sess.delete(frog)
+
+        db_sess.commit()
+
+    return redirect('/')
+
+
+@app.route('/release_frog/<int:zh_id>')
+@login_required
+def release_frog(zh_id):
+    db_sess = db_session.create_session()
+    frog = db_sess.query(Zhaba).filter(Zhaba.id == zh_id).first()
+    if frog:
+        frog.id = zh_id
+        frog.u_id = 0
+        frog.pw = randint(0, 9)
+
+        db_sess.merge(frog)
+        db_sess.commit()
+
+    return redirect('/')
 
 
 @app.route('/logout')
