@@ -150,7 +150,7 @@ def user_page(user_id):
         return render_template('user_page.html', user=user, is_friends=FM.is_friends(current_user.id, user.id),
                                form=form,
                                news=(news[::-1] if news else []),
-                               # zh_c=len(ZhM.all_zh(user_id))
+                               zh_c=len(ZhM.all_zh(user_id))
                                )
     else:
         abort(404)
@@ -300,7 +300,7 @@ def news():
         if _news:
             for new in _news:
                 newss += [(new, db_sess.query(User).filter(User.id == i).first())]
-    print(newss)
+    newss.sort(key=lambda x: -x[0].id)
     return render_template('news.html', news=newss)
 
 
@@ -363,6 +363,14 @@ def release_frog(zh_id):
         db_sess.commit()
 
     return redirect('/')
+
+
+@app.route('/user_zhabs/<int:u_id>')
+@login_required
+def u_zhabs(u_id):
+    return render_template('u_zh.html',
+                           zhabs=ZhM.all_zh(u_id)
+                           )
 
 
 @app.route('/logout')

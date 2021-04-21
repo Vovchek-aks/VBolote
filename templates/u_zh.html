@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <br>
+
+    {% if zhabs%}
+        {% for zh in zhabs %}
+            <div class="news">
+                <span class="news-text">Имя:</span>
+                <span class="news-text">{{ zh.name1 }}</span>
+                <span class="news-text">{{ zh.name2 }}</span>
+                <span class="news-text">{{ zh.name3 }}</span>
+                <br>
+                <a class="btn btn-danger dislike" href="/release_frog/{{zh.id}}">Отпустить</a>
+            </div>
+            <br>
+        {% endfor %}
+    {% else %}
+        <div class="news">
+                <span class="news-text">Жаб нет</span>
+        </div>
+    {% endif %}
+{% endblock %}

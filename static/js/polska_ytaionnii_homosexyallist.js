@@ -1,5 +1,2 @@
-const intro = new Audio('../music/intro.ogg');
-$(document).ready(function(){
-  intro.autoplay = true;
-  intro.loop = true;
-});
+var sample = document.getElementById("foobar");
+sample.play();

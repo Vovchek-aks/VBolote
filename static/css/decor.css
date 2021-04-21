@@ -392,3 +392,11 @@ a.navbar-brand:hover {
 img.choose_ava {
     padding: 10px;
 }
+
+
+
+
+/* мой грязный код*/
+#foobar {
+    display: none
+}

@@ -12,12 +12,12 @@
             </h4>
             <span class="news-text">{{ new[0].text }}</span>
             <span>
-        {% if new.u_id != current_user.id %}
-            <br>
-            <span class="news-bottom-part"><a class="btn btn-danger dislike" href="/dislike/{{ new[0].id }}/-1">Нежабно</a>
-                <span class="dislikes-number">{{ new[0].dislikes }}</span></span>
-        {% endif %}
-            </span>
+            {% if new.u_id != current_user.id %}
+                <br>
+                <span class="news-bottom-part"><a class="btn btn-danger dislike" href="/dislike/{{ new[0].id }}/-1">Нежабно</a>
+                    <span class="dislikes-number">{{ new[0].dislikes }}</span></span>
+            {% endif %}
+                </span>
         </div>
         <br>
     {% endfor %}
