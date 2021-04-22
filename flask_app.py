@@ -463,7 +463,7 @@ def add_new():
     user = db_sess.query(User).filter(User.email == request.json['email']).first()
     if not user:
         return jsonify({'error': 'No user'})
-    if not user.check_password(request.json['pw']):
+    if not user.check_password(request.json['password']):
         return jsonify({'error': 'Bad password'})
 
     new = News(
