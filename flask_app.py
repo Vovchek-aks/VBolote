@@ -391,26 +391,21 @@ def not_found(error):
 
 
 @app.route('/api/all_users')
-@login_required
 def api_users():
     db_sess = db_session.create_session()
     users = db_sess.query(User).all()
-    ret = []
-    for i in users:
-        ret += [{
-            'name': i.name,
-            'about': i.about
-        }]
 
     return jsonify(
         {
-            'users': ret
+            'users': [
+                item.to_dict(only=('name', 'about')) for item in users
+            ]
         }
     )
 
 
 @app.route('/api/add_zhaba', methods=['POST'])
-def create_news():
+def add_zhaba():
     if not request.json:
         return jsonify({'error': 'Empty request'})
     elif not all(key in request.json for key in
