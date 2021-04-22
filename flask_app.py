@@ -373,6 +373,26 @@ def u_zhabs(u_id):
                            )
 
 
+@app.route('/api/add_zhaba', methods=['POST'])
+def create_news():
+    if not request.json:
+        return jsonify({'error': 'Empty request'})
+    elif not all(key in request.json for key in
+                 ['name1', 'name2', 'name3', 'pw', 'u_id']):
+        return jsonify({'error': 'Bad request'})
+    db_sess = db_session.create_session()
+    frog = Zhaba(
+        name1=request.json['name1'],
+        name2=request.json['name2'],
+        name3=request.json['name3'],
+        pw=request.json['pw'],
+        u_id=request.json['u_id'],
+    )
+    db_sess.add(frog)
+    db_sess.commit()
+    return jsonify({'success': 'OK'})
+
+
 @app.route('/logout')
 @login_required
 def logout():
