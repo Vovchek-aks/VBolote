@@ -1,4 +1,6 @@
-from flask import Flask, redirect, render_template, request, abort, make_response, jsonify
+from flask import Flask, redirect, render_template, request, abort, make_response, jsonify, session
+from werkzeug.security import generate_password_hash
+
 from data import db_session
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user, AnonymousUserMixin
 import datetime as dt
@@ -6,6 +8,8 @@ from forms.login import LoginForm
 from forms.message import MessageForm
 from forms.register import RegisterForm
 from forms.edit_user import EditUserForm
+from forms.send_email import EmailForm
+from forms.send_code import CodeForm
 from forms.make_news import NewsForm
 from data.users import User
 from data.friends import Friends
@@ -13,6 +17,10 @@ from data.messages import Messages
 from data.news import News
 from data.zhabs import Zhaba
 from random import randint
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -82,6 +90,10 @@ def load_user(user_id):
 @app.route('/')
 @app.route('/index')
 def index():
+    session.pop('email', None)
+    session.pop('password', None)
+    session.pop('ok', None)
+
     if current_user.is_authenticated:
         return redirect(f'/user/{current_user.id}')
     return render_template("index.html")
@@ -102,6 +114,65 @@ def login():
     return render_template('login.html', form=form)
 
 
+@app.route('/send_email', methods=['GET', 'POST'])
+def send_email():
+    form = EmailForm()
+    if form.validate_on_submit():
+        if '@mail.ru'not in form.email.data:
+            return render_template('send_email.html',
+                                   form=form,
+                                   message="Ты читать умеешь?!")
+        db_sess = db_session.create_session()
+        if db_sess.query(User).filter(User.email == form.email.data).first():
+            return render_template('send_email.html',
+                                   form=form,
+                                   message="Такой пользователь уже есть")
+
+        pw = generate_password_hash(form.email.data)
+
+        session['email'] = form.email.data
+        session['password'] = pw
+
+        from_email = 'code_sender@mail.ru'
+        password = ']=[-p0o9'
+        to_email = form.email.data
+        message = 'Здравствуйте.\n' \
+                  'Это сообщение с сайта Vbolote.\n' \
+                  'Если вы не пытались на нём зарегистрироваться, проигнорируйте это сообщение.\n' \
+                  f'Код: {pw}\n'
+
+        msg = MIMEMultipart()
+        msg.attach(MIMEText(message, 'plain'))
+        server = smtplib.SMTP('smtp.mail.ru: 25')
+        server.starttls()
+        server.login(from_email, password)
+        server.sendmail(from_email, to_email, msg.as_string())
+        server.quit()
+
+        return redirect('/send_code')
+    return render_template('send_email.html', form=form)
+
+
+@app.route('/send_code', methods=['GET', 'POST'])
+def send_code():
+    form = CodeForm()
+    if form.validate_on_submit():
+
+        password = session.get('password', None)
+
+        if password is not None and \
+           form.code.data == password:
+            session['ok'] = True
+            return redirect('/register')
+
+        session.pop('email', None)
+        session.pop('ok', None)
+        session.pop('password', None)
+        return redirect('/')
+
+    return render_template('send_code.html', form=form)
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
@@ -111,13 +182,19 @@ def register():
                                    form=form,
                                    message="Пароли не совпадают")
         db_sess = db_session.create_session()
-        if db_sess.query(User).filter(User.email == form.email.data).first():
-            return render_template('register.html',
-                                   form=form,
-                                   message="Такой пользователь уже есть")
+
+        email = session.get('email', None)
+        ok = session.get('ok', False)
+
+        if email is None or not ok:
+            session.pop('email', None)
+            session.pop('password', None)
+            session.pop('ok', None)
+            return redirect('/')
+
         user = User(
             name=form.name.data,
-            email=form.email.data,
+            email=email,
             # au_attitude=form.au_attitude.data,
             # frog_attitude=form.frog_attitude.data,
             # cvc_code=form.cvc_code.data,
@@ -127,6 +204,11 @@ def register():
         db_sess.add(user)
         db_sess.commit()
         login_user(user, remember=True)
+
+        session.pop('email', None)
+        session.pop('password', None)
+        session.pop('ok', None)
+
         return redirect('/')
     return render_template('register.html', form=form)
 

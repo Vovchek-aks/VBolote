@@ -20,15 +20,6 @@
             </p>
         {% endfor %}
     </p>
-<p>
-        {{ form.email.label }}<br>
-        {{ form.email(class="form-control", type="email") }}<br>
-        {% for error in form.email.errors %}
-            <p class="alert alert-danger" role="alert">
-                {{ error }}
-            </p>
-        {% endfor %}
-    </p>
     <p>
         {{ form.password.label }}<br>
         {{ form.password(class="form-control", type="password") }}<br>
