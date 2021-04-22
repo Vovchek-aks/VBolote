@@ -475,6 +475,33 @@ def add_new():
     return jsonify({'success': 'OK'})
 
 
+@app.route('/api/send_mess', methods=['POST'])
+def send_mess():
+    if not request.json:
+        return jsonify({'error': 'Empty request'})
+    elif not all(key in request.json for key in
+                 ['email', 'password', 'text', 'email_to']):
+        return jsonify({'error': 'Bad request'})
+    db_sess = db_session.create_session()
+    user = db_sess.query(User).filter(User.email == request.json['email']).first()
+    user2 = db_sess.query(User).filter(User.email == request.json['email_to']).first()
+    if not (user and user2):
+        return jsonify({'error': 'No user'})
+    if not user.check_password(request.json['password']):
+        return jsonify({'error': 'Bad password'})
+    if not FM.is_friends(user.id, user2.id):
+        return jsonify({'error': 'U must be friends'})
+
+    mes = Messages(
+        text=request.json['text'],
+        u_id=user.id,
+        b_id=FM.id_fr(user.id, user2.id)
+    )
+    db_sess.add(mes)
+    db_sess.commit()
+    return jsonify({'success': 'OK'})
+
+
 def main():
     db_session.global_init("db/user.db")
     app.run(debug=True)
