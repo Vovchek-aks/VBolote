@@ -452,6 +452,29 @@ def add_zhaba():
     return jsonify({'success': 'OK'})
 
 
+@app.route('/api/add_new', methods=['POST'])
+def add_new():
+    if not request.json:
+        return jsonify({'error': 'Empty request'})
+    elif not all(key in request.json for key in
+                 ['email', 'password', 'text']):
+        return jsonify({'error': 'Bad request'})
+    db_sess = db_session.create_session()
+    user = db_sess.query(User).filter(User.email == request.json['email']).first()
+    if not user:
+        return jsonify({'error': 'No user'})
+    if not user.check_password(request.json['pw']):
+        return jsonify({'error': 'Bad password'})
+
+    new = News(
+        text=request.json['text'],
+        u_id=user.id
+    )
+    db_sess.add(new)
+    db_sess.commit()
+    return jsonify({'success': 'OK'})
+
+
 def main():
     db_session.global_init("db/user.db")
     app.run(debug=True)
