@@ -404,6 +404,34 @@ def api_users():
     )
 
 
+@app.route('/api/all_news')
+def api_news():
+    db_sess = db_session.create_session()
+    users = db_sess.query(News).all()
+
+    return jsonify(
+        {
+            'news': [
+                item.to_dict(only=('text', 'dislikes')) for item in users
+            ]
+        }
+    )
+
+
+@app.route('/api/all_zhabs')
+def api_zhabs():
+    db_sess = db_session.create_session()
+    users = db_sess.query(Zhaba).all()
+
+    return jsonify(
+        {
+            'zhabs': [
+                item.to_dict(only=('name1', 'name2', 'name3')) for item in users
+            ]
+        }
+    )
+
+
 @app.route('/api/add_zhaba', methods=['POST'])
 def add_zhaba():
     if not request.json:
