@@ -1,6 +1,6 @@
 import requests
 
-ret = requests.post(
+ret1 = requests.post(
     'http://127.0.0.1:5000/api/add_zhaba',
     json={
         'name1': 'sfeef',
@@ -11,6 +11,9 @@ ret = requests.post(
     }
 ).json()
 
-print(ret)
+ret2 = requests.get('http://127.0.0.1:5000/api/all_users').json()
+
+print(ret1)
+print(ret2)
 
 

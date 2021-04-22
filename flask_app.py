@@ -346,7 +346,7 @@ def open_frog(pw, zh_id):
 
         db_sess.commit()
 
-    return redirect('/')
+    return redirect('/frog_lottery')
 
 
 @app.route('/release_frog/<int:zh_id>')
@@ -355,6 +355,7 @@ def release_frog(zh_id):
     db_sess = db_session.create_session()
     frog = db_sess.query(Zhaba).filter(Zhaba.id == zh_id).first()
     if frog:
+        idd = frog.u_id
         frog.id = zh_id
         frog.u_id = 0
         frog.pw = randint(0, 9)
@@ -362,35 +363,19 @@ def release_frog(zh_id):
         db_sess.merge(frog)
         db_sess.commit()
 
+        return redirect(f'/user_zhabs/{idd}')
     return redirect('/')
 
 
 @app.route('/user_zhabs/<int:u_id>')
 @login_required
 def u_zhabs(u_id):
-    return render_template('u_zh.html',
-                           zhabs=ZhM.all_zh(u_id)
-                           )
-
-
-@app.route('/api/add_zhaba', methods=['POST'])
-def create_news():
-    if not request.json:
-        return jsonify({'error': 'Empty request'})
-    elif not all(key in request.json for key in
-                 ['name1', 'name2', 'name3', 'pw', 'u_id']):
-        return jsonify({'error': 'Bad request'})
     db_sess = db_session.create_session()
-    frog = Zhaba(
-        name1=request.json['name1'],
-        name2=request.json['name2'],
-        name3=request.json['name3'],
-        pw=request.json['pw'],
-        u_id=request.json['u_id'],
-    )
-    db_sess.add(frog)
-    db_sess.commit()
-    return jsonify({'success': 'OK'})
+    user = db_sess.query(User).filter(User.id == u_id).first()
+    return render_template('u_zh.html',
+                           zhabs=ZhM.all_zh(u_id),
+                           user=user
+                           )
 
 
 @app.route('/logout')
@@ -417,7 +402,31 @@ def api_users():
             'about': i.about
         }]
 
-    return jsonify(ret)
+    return jsonify(
+        {
+            'users': ret
+        }
+    )
+
+
+@app.route('/api/add_zhaba', methods=['POST'])
+def create_news():
+    if not request.json:
+        return jsonify({'error': 'Empty request'})
+    elif not all(key in request.json for key in
+                 ['name1', 'name2', 'name3', 'pw', 'u_id']):
+        return jsonify({'error': 'Bad request'})
+    db_sess = db_session.create_session()
+    frog = Zhaba(
+        name1=request.json['name1'],
+        name2=request.json['name2'],
+        name3=request.json['name3'],
+        pw=request.json['pw'],
+        u_id=request.json['u_id'],
+    )
+    db_sess.add(frog)
+    db_sess.commit()
+    return jsonify({'success': 'OK'})
 
 
 def main():

@@ -11,8 +11,10 @@
                 <span class="news-text">{{ zh.name1 }}</span>
                 <span class="news-text">{{ zh.name2 }}</span>
                 <span class="news-text">{{ zh.name3 }}</span>
-                <br>
-                <a class="btn btn-danger dislike" href="/release_frog/{{zh.id}}">Отпустить</a>
+                {% if user.id == current_user.id %}
+                    <br>
+                    <a class="btn btn-danger dislike" href="/release_frog/{{zh.id}}">Отпустить</a>
+                {% endif %}
             </div>
             <br>
         {% endfor %}
