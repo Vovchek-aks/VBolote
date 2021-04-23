@@ -40,6 +40,8 @@
 <p class="about_info">Отношение к жабам и лягушкам: <br><br>{{user.frog_attitude}}</p>
 {% endif %}
 
+<a href="/friends/{{user.id}}"><p class="about_info">Друзей: {{ fr_c }}</p></a>
+
 <a href="/user_zhabs/{{user.id}}"><p class="about_info">Количество жаб: {{ zh_c }}</p></a>
 
 {% if user == current_user %}

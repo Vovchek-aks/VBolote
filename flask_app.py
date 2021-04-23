@@ -1,6 +1,5 @@
 from flask import Flask, redirect, render_template, request, abort, make_response, jsonify, session
 from werkzeug.security import generate_password_hash
-
 from data import db_session
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user, AnonymousUserMixin
 import datetime as dt
@@ -61,9 +60,11 @@ class FM:
         return -1
 
 
+# messages manager
+# класс, регулирующий действия сообщений
 class MM:
     @staticmethod
-    def get_ms_from_id(user_id):
+    def get_ms_from_id(user_id):  # возвращает переписку
         b_id = FM.id_fr(user_id, current_user.id)
         if b_id == -1:
             return None
@@ -83,7 +84,7 @@ class MM:
 # Жаба менеджер
 class ZhM:
     @staticmethod
-    def all_zh(u_id):
+    def all_zh(u_id):  # возвращает всех жаб
         db_sess = db_session.create_session()
         return db_sess.query(Zhaba).filter(Zhaba.u_id == u_id).all()
 
@@ -246,7 +247,8 @@ def user_page(user_id):
         return render_template('user_page.html', user=user, is_friends=FM.is_friends(current_user.id, user.id),
                                form=form,
                                news=(news[::-1] if news else []),
-                               zh_c=len(ZhM.all_zh(user_id))
+                               zh_c=len(ZhM.all_zh(user_id)),
+                               fr_c=len(FM.user_friends(user_id))
                                )
     else:
         abort(404)
@@ -440,7 +442,7 @@ def frog_lottery():
     return render_template('frogs.html', frogs=frogs)
 
 
-#
+# разблокировка жабы
 @app.route('/open_frog/<int:pw>/<int:zh_id>')
 @login_required
 def open_frog(pw, zh_id):
@@ -459,7 +461,7 @@ def open_frog(pw, zh_id):
     return redirect('/frog_lottery')
 
 
-#
+# отпустить жабу
 @app.route('/release_frog/<int:zh_id>')
 @login_required
 def release_frog(zh_id):

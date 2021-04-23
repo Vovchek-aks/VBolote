@@ -2,41 +2,63 @@
 
 {% block content %}
     <br>
-    <div class="row row-cols-1 row-cols-md-4 g-4">
-        {% for i in frogs %}
-            <div class="card">
-{#                <img src="../static/img/pics/pic3.jpg" class="add_friend_pic" alt="...">#}
-                <div class="card-body" style="height: 850px; width: 380px; background-image: url(../static/img/nokia.png)">
-                    <br>
-                    <h5 class="card-title" style="color: lightgray">   .</h5><br><br><br>
 
-                    <h5 class="card-title FIO"> {{i.name1}} </h5>
-                    <br>
-                    <h5 class="card-title FIO"> {{i.name2}} </h5>
-                    <br>
-                    <h5 class="card-title FIO"> {{i.name3}} </h5>
+    {% if frogs %}
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            {% for i in frogs %}
+                <div class="card">
+    {#                <img src="../static/img/pics/pic3.jpg" class="add_friend_pic" alt="...">#}
+                    <div class="card-body" style="height: 850px; width: 380px; background-image: url(../static/img/nokia.png)">
+                        <br>
+                        <h5 class="card-title" style="color: lightgray">   .</h5><br><br><br>
 
-                    <br>
-                    <br><br><br><br><br><br><br><br>
-{#                    YRUGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG                              #}
-                    <br>
-                    <span class="number_choose">
-                        <a href="/open_frog/1/{{ i.id }}" class="btn-primary nokia">  1 </a>
-                        <a href="/open_frog/2/{{ i.id }}" class="btn-primary nokia">  2 </a>
-                        <a href="/open_frog/3/{{ i.id }}" class="btn-primary nokia">  3 </a></span><br><br>
-                    <span class="number_choose">
-                        <a href="/open_frog/4/{{ i.id }}" class="btn-primary nokia">  4 </a>
-                        <a href="/open_frog/5/{{ i.id }}" class="btn-primary nokia"> 5 </a>
-                        <a href="/open_frog/6/{{ i.id }}" class="btn-primary nokia"> 6 </a></span><br><br>
-                    <span class="number_choose">
-                        <a href="/open_frog/7/{{ i.id }}" class="btn-primary nokia">  7 </a>
-                        <a href="/open_frog/8/{{ i.id }}" class="btn-primary nokia"> 8 </a>
-                        <a href="/open_frog/9/{{ i.id }}" class="btn-primary nokia"> 9 </a></span><br><br>
-                    <span class="number_choose">
-                        <a href="/open_frog/0/{{ i.id }}" class="btn-primary nokia">  0 </a>
-                    </span>
+                        <h5 class="card-title FIO"> {{i.name1}} </h5>
+                        <br>
+                        <h5 class="card-title FIO"> {{i.name2}} </h5>
+                        <br>
+                        <h5 class="card-title FIO"> {{i.name3}} </h5>
+
+                        <br>
+                        <br><br><br><br><br><br><br><br>
+    {#                    YRUGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG                              #}
+                        <br>
+                        <span class="number_choose">
+                            <a href="/open_frog/1/{{ i.id }}" class="btn-primary nokia">  1 </a>
+                            <a href="/open_frog/2/{{ i.id }}" class="btn-primary nokia">  2 </a>
+                            <a href="/open_frog/3/{{ i.id }}" class="btn-primary nokia">  3 </a></span><br><br>
+                        <span class="number_choose">
+                            <a href="/open_frog/4/{{ i.id }}" class="btn-primary nokia">  4 </a>
+                            <a href="/open_frog/5/{{ i.id }}" class="btn-primary nokia"> 5 </a>
+                            <a href="/open_frog/6/{{ i.id }}" class="btn-primary nokia"> 6 </a></span><br><br>
+                        <span class="number_choose">
+                            <a href="/open_frog/7/{{ i.id }}" class="btn-primary nokia">  7 </a>
+                            <a href="/open_frog/8/{{ i.id }}" class="btn-primary nokia"> 8 </a>
+                            <a href="/open_frog/9/{{ i.id }}" class="btn-primary nokia"> 9 </a></span><br><br>
+                        <span class="number_choose">
+                            <a href="/open_frog/0/{{ i.id }}" class="btn-primary nokia">  0 </a>
+                        </span>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
-    </div><br><br>
+            {% endfor %}
+        </div><br><br>
+
+    {% else %}
+        <div class="news">
+                <span class="news-text">Жаб нет</span>
+        </div>
+    {% endif %}
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

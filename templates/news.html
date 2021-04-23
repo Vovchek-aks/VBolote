@@ -3,23 +3,28 @@
 {% block content %}
 
     <br>
-
-    {% for new in news %}
+    {% if news %}
+        {% for new in news %}
+            <div class="news">
+                <h4 class="news-user">
+                    <img src="../static/img/pics/pic{{ new[1].pic }}.jpg" class="mini_user_pic" alt="аватарка"/>
+                    <a class="news-username" href="/user/{{ new[1].id }}">{{ new[1].name }}</a>
+                </h4>
+                <span class="news-text">{{ new[0].text }}</span>
+                <span>
+                {% if new.u_id != current_user.id %}
+                    <br>
+                    <span class="news-bottom-part"><a class="btn btn-danger dislike" href="/dislike/{{ new[0].id }}/-1">Нежабно</a>
+                        <span class="dislikes-number">{{ new[0].dislikes }}</span></span>
+                {% endif %}
+                    </span>
+            </div>
+            <br>
+        {% endfor %}
+    {% else %}
         <div class="news">
-            <h4 class="news-user">
-                <img src="../static/img/pics/pic{{ new[1].pic }}.jpg" class="mini_user_pic" alt="аватарка"/>
-                <a class="news-username" href="/user/{{ new[1].id }}">{{ new[1].name }}</a>
-            </h4>
-            <span class="news-text">{{ new[0].text }}</span>
-            <span>
-            {% if new.u_id != current_user.id %}
-                <br>
-                <span class="news-bottom-part"><a class="btn btn-danger dislike" href="/dislike/{{ new[0].id }}/-1">Нежабно</a>
-                    <span class="dislikes-number">{{ new[0].dislikes }}</span></span>
-            {% endif %}
-                </span>
+                <span class="news-text">Вестей нет</span>
         </div>
-        <br>
-    {% endfor %}
+    {% endif %}
 
 {% endblock %}

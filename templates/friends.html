@@ -2,18 +2,25 @@
 
 {% block content %}
     <br>
-    <div class="row row-cols-1 row-cols-md-4 g-4">
-    {% for user in users %}
-        <div class="col">
-        <a href="/user/{{ user.id }}">
-        <div class="card">
-            <img src="../static/img/pics/pic{{user.pic}}.jpg" class="add_friend_pic" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">{{ user.name }}</h5><br>
+    {% if users %}
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+        {% for user in users %}
+            <div class="col">
+            <a href="/user/{{ user.id }}">
+            <div class="card">
+                <img src="../static/img/pics/pic{{user.pic}}.jpg" class="add_friend_pic" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ user.name }}</h5><br>
+                </div>
+            </div><br>
+            </a>
             </div>
-        </div><br>
-        </a>
+        {% endfor %}
         </div>
-    {% endfor %}
-    </div>
+
+    {% else %}
+        <div class="news">
+                <span class="news-text">Джабей нет</span>
+        </div>
+    {% endif %}
 {% endblock %}
