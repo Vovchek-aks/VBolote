@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, redirect, render_template, request, abort, make_response, jsonify, session
 from werkzeug.security import generate_password_hash
 from data import db_session
@@ -625,7 +627,8 @@ def send_mess():
 # запуск творения иисуса
 def main():
     db_session.global_init("db/user.db")
-    app.run()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
 
 
 if __name__ == '__main__':
