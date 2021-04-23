@@ -19,7 +19,6 @@ from random import randint
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 login_manager = LoginManager()
@@ -627,7 +626,7 @@ def send_mess():
 # запуск творения иисуса
 def main():
     db_session.global_init("db/user.db")
-    app.run(debug=True)
+    app.run()
 
 
 if __name__ == '__main__':
