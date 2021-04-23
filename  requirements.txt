@@ -1,1 +1,13 @@
 flask
+werkzeug
+os
+sqlalchemy
+flask_login
+random
+smtplib
+email
+flask_wtf
+wtforms
+pprint
+time
+requests

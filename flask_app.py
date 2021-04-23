@@ -2,7 +2,6 @@ from flask import Flask, redirect, render_template, request, abort, make_respons
 from werkzeug.security import generate_password_hash
 from data import db_session
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user, AnonymousUserMixin
-import datetime as dt
 from forms.login import LoginForm
 from forms.message import MessageForm
 from forms.register import RegisterForm
