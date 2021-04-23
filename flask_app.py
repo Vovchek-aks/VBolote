@@ -153,11 +153,15 @@ def send_email():
                   'Это сообщение с сайта Vbolote.\n' \
                   'Если вы не пытались на нём зарегистрироваться, проигнорируйте это сообщение.\n' \
                   f'Код: {pw}\n'
-
+        print(1)
         msg = MIMEMultipart()
+        print(2)
         msg.attach(MIMEText(message, 'plain'))
+        print(3)
         server = smtplib.SMTP('smtp.mail.ru: 25')
+        print(4)
         server.starttls()
+        print(5)
         server.login(from_email, password)
         server.sendmail(from_email, to_email, msg.as_string())
         server.quit()
