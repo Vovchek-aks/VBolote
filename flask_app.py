@@ -100,9 +100,9 @@ def load_user(user_id):
 @app.route('/')
 @app.route('/index')
 def index():
-    session.pop('email', None)
-    session.pop('password', None)
-    session.pop('ok', None)
+    # session.pop('email', None)
+    # session.pop('password', None)
+    # session.pop('ok', None)
 
     if current_user.is_authenticated:
         return redirect(f'/user/{current_user.id}')
@@ -128,6 +128,7 @@ def login():
 # первый этап регистрации через отправление кода на почту
 @app.route('/send_email', methods=['GET', 'POST'])
 def send_email():
+    return redirect('/')
     form = EmailForm()
     if form.validate_on_submit():
         if '@mail.ru' not in form.email.data:
@@ -168,6 +169,7 @@ def send_email():
 # ввод кода из сообщения на почту
 @app.route('/send_code', methods=['GET', 'POST'])
 def send_code():
+    return redirect('/')
     form = CodeForm()
     if form.validate_on_submit():
 
@@ -197,18 +199,18 @@ def register():
                                    message="Пароли не совпадают")
         db_sess = db_session.create_session()
 
-        email = session.get('email', None)
-        ok = session.get('ok', False)
+        # email = session.get('email', None)
+        # ok = session.get('ok', False)
 
-        if email is None or not ok:
-            session.pop('email', None)
-            session.pop('password', None)
-            session.pop('ok', None)
-            return redirect('/')
+        # if email is None or not ok:
+        #     session.pop('email', None)
+        #     session.pop('password', None)
+        #     session.pop('ok', None)
+        #     return redirect('/')
 
         user = User(
             name=form.name.data,
-            email=email,
+            email=form.email.data,
             # au_attitude=form.au_attitude.data,
             # frog_attitude=form.frog_attitude.data,
             # cvc_code=form.cvc_code.data,
@@ -219,9 +221,9 @@ def register():
         db_sess.commit()
         login_user(user, remember=True)
 
-        session.pop('email', None)
-        session.pop('password', None)
-        session.pop('ok', None)
+        # session.pop('email', None)
+        # session.pop('password', None)
+        # session.pop('ok', None)
 
         return redirect('/')
     return render_template('register.html', form=form)
