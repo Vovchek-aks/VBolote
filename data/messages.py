@@ -4,6 +4,7 @@ from sqlalchemy import orm
 from sqlalchemy_serializer import SerializerMixin
 from .db_session import SqlAlchemyBase
 
+# класс, отвечающий за сообщения
 
 class Messages(SqlAlchemyBase, UserMixin, SerializerMixin):
     __tablename__ = 'messages'

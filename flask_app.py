@@ -21,26 +21,32 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 login_manager = LoginManager()
 login_manager.init_app(app)
 
 
+# friends manager
+# класс, регулирующий действия друзей
+
 class FM:
+
+    # метод, который возвращает информацию о том, друзья ли эти пользователи
     @staticmethod
     def is_friends(id1, id2):
         db_sess = db_session.create_session()
         return (id2,) in db_sess.query(Friends.u_id2).filter(Friends.u_id1 == id1).all() or \
                (id1,) in db_sess.query(Friends.u_id2).filter(Friends.u_id1 == id2).all()
 
+    # метод, который возвращает друзей пользователя
     @staticmethod
     def user_friends(u_id):
         db_sess = db_session.create_session()
         return list(map(lambda x: x[0], db_sess.query(Friends.u_id2).filter(Friends.u_id1 == u_id).all() + \
                         db_sess.query(Friends.u_id1).filter(Friends.u_id2 == u_id).all()))
 
+    # метод, который возвращает айди контракта о дружбе
     @staticmethod
     def id_fr(id1, id2):
         db_sess = db_session.create_session()
@@ -74,6 +80,7 @@ class MM:
         return all_m
 
 
+# Жаба менеджер
 class ZhM:
     @staticmethod
     def all_zh(u_id):
@@ -81,12 +88,14 @@ class ZhM:
         return db_sess.query(Zhaba).filter(Zhaba.u_id == u_id).all()
 
 
+# загружает юзера
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
     return db_sess.query(User).get(user_id)
 
 
+# главная страница для зарегистрированных пользователей и новичков
 @app.route('/')
 @app.route('/index')
 def index():
@@ -99,6 +108,7 @@ def index():
     return render_template("index.html")
 
 
+# обработчик входа в аккаунт
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -114,11 +124,12 @@ def login():
     return render_template('login.html', form=form)
 
 
+# первый этап регистрации через отправление кода на почту
 @app.route('/send_email', methods=['GET', 'POST'])
 def send_email():
     form = EmailForm()
     if form.validate_on_submit():
-        if '@mail.ru'not in form.email.data:
+        if '@mail.ru' not in form.email.data:
             return render_template('send_email.html',
                                    form=form,
                                    message="Ты читать умеешь?!")
@@ -153,6 +164,7 @@ def send_email():
     return render_template('send_email.html', form=form)
 
 
+# ввод кода из сообщения на почту
 @app.route('/send_code', methods=['GET', 'POST'])
 def send_code():
     form = CodeForm()
@@ -161,7 +173,7 @@ def send_code():
         password = session.get('password', None)
 
         if password is not None and \
-           form.code.data == password:
+                form.code.data == password:
             session['ok'] = True
             return redirect('/register')
 
@@ -173,6 +185,7 @@ def send_code():
     return render_template('send_code.html', form=form)
 
 
+# обработчик регистрации
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
@@ -213,6 +226,7 @@ def register():
     return render_template('register.html', form=form)
 
 
+# обработчик страницы пользователя
 @app.route('/user/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 def user_page(user_id):
@@ -238,6 +252,7 @@ def user_page(user_id):
         abort(404)
 
 
+# изменение страницы пользователя
 @app.route('/edit_user', methods=['GET', 'POST'])
 @login_required
 def edit_user():
@@ -264,6 +279,7 @@ def edit_user():
             abort(404)
 
 
+# обработчик добавления пользователя в друзья
 @app.route('/add_friend/<int:user_id>')
 @login_required
 def add_friend(user_id):
@@ -277,6 +293,7 @@ def add_friend(user_id):
     return redirect(f"/user/{user_id}")
 
 
+# обработчик удаления друга (вова лох)
 @app.route('/del_friend/<int:user_id>')
 @login_required
 def del_friend(user_id):
@@ -292,6 +309,7 @@ def del_friend(user_id):
     return redirect(f"/user/{user_id}")
 
 
+# страница со всеми пользователями
 @app.route('/all_users')
 @login_required
 def all_users():
@@ -300,12 +318,14 @@ def all_users():
     return render_template('all_users.html', users=users)
 
 
+# страница выбора аватарки
 @app.route('/choose_ava')
 @login_required
 def choose_ava():
     return render_template('choose_ava.html')
 
 
+# обработчик установления аватарки для профиля
 @app.route('/set_ava/<int:ava_id>')
 @login_required
 def set_ava(ava_id):
@@ -318,6 +338,7 @@ def set_ava(ava_id):
     return redirect('/')
 
 
+# страница с друзьями указанного пользователя
 @app.route('/friends/<int:user_id>')
 @login_required
 def friends(user_id):
@@ -329,6 +350,7 @@ def friends(user_id):
     return render_template('friends.html', users=users)
 
 
+# просто скажите сайонара своему профилю :(
 @app.route('/suicide')
 @login_required
 def suicide():
@@ -339,6 +361,7 @@ def suicide():
     return redirect('/')
 
 
+# диалог пользователя
 @app.route('/messages/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 def messages(user_id):
@@ -361,6 +384,7 @@ def messages(user_id):
         return render_template('messages.html', form=form, user=user, messages=msgs)
 
 
+# обработчик удаления новости
 @app.route('/del_new/<int:new_id>')
 @login_required
 def del_new(new_id):
@@ -372,6 +396,7 @@ def del_new(new_id):
     return redirect("/")
 
 
+# страница с новостями
 @app.route('/news')
 @login_required
 def news():
@@ -386,6 +411,7 @@ def news():
     return render_template('news.html', news=newss)
 
 
+# обработчик дизлайканья новости
 @app.route('/dislike/<int:new_id>/<string:fr>')
 @login_required
 def dislike(new_id, fr):
@@ -405,6 +431,7 @@ def dislike(new_id, fr):
         return redirect(f'/user/{fr}')
 
 
+# страница с лотереей лягушек
 @app.route('/frog_lottery')
 @login_required
 def frog_lottery():
@@ -413,6 +440,7 @@ def frog_lottery():
     return render_template('frogs.html', frogs=frogs)
 
 
+#
 @app.route('/open_frog/<int:pw>/<int:zh_id>')
 @login_required
 def open_frog(pw, zh_id):
@@ -431,6 +459,7 @@ def open_frog(pw, zh_id):
     return redirect('/frog_lottery')
 
 
+#
 @app.route('/release_frog/<int:zh_id>')
 @login_required
 def release_frog(zh_id):
@@ -449,6 +478,7 @@ def release_frog(zh_id):
     return redirect('/')
 
 
+# страница жаб пользователя
 @app.route('/user_zhabs/<int:u_id>')
 @login_required
 def u_zhabs(u_id):
@@ -460,6 +490,7 @@ def u_zhabs(u_id):
                            )
 
 
+# обработчик выхода из профиля
 @app.route('/logout')
 @login_required
 def logout():
@@ -467,11 +498,13 @@ def logout():
     return redirect("/")
 
 
+# ошибка
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': f'Not found'}), 404)
 
 
+# АПИ всех пользователей
 @app.route('/api/all_users')
 def api_users():
     db_sess = db_session.create_session()
@@ -486,6 +519,7 @@ def api_users():
     )
 
 
+# АПИ всех новостей
 @app.route('/api/all_news')
 def api_news():
     db_sess = db_session.create_session()
@@ -500,6 +534,7 @@ def api_news():
     )
 
 
+# АПИ всех жаб
 @app.route('/api/all_zhabs')
 def api_zhabs():
     db_sess = db_session.create_session()
@@ -514,6 +549,7 @@ def api_zhabs():
     )
 
 
+# АПИ добавления жабы
 @app.route('/api/add_zhaba', methods=['POST'])
 def add_zhaba():
     if not request.json:
@@ -534,6 +570,7 @@ def add_zhaba():
     return jsonify({'success': 'OK'})
 
 
+# АПИ добавления новости
 @app.route('/api/add_new', methods=['POST'])
 def add_new():
     if not request.json:
@@ -557,6 +594,7 @@ def add_new():
     return jsonify({'success': 'OK'})
 
 
+# АПИ всех сообщений
 @app.route('/api/send_mess', methods=['POST'])
 def send_mess():
     if not request.json:
@@ -584,6 +622,7 @@ def send_mess():
     return jsonify({'success': 'OK'})
 
 
+# запуск творения иисуса
 def main():
     db_session.global_init("db/user.db")
     app.run(debug=True)

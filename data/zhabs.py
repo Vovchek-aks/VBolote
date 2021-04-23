@@ -7,6 +7,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from .db_session import SqlAlchemyBase
 
 
+# класс, отвечающий за жаб пользователя
+
 class Zhaba(SqlAlchemyBase, UserMixin, SerializerMixin):
     __tablename__ = 'zhabs'
 
@@ -21,5 +23,3 @@ class Zhaba(SqlAlchemyBase, UserMixin, SerializerMixin):
     u_id = sqlalchemy.Column(sqlalchemy.Integer, nullable=True, default=0)
 
     # jobs = orm.relation("Job")
-
-

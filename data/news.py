@@ -5,6 +5,8 @@ from sqlalchemy_serializer import SerializerMixin
 from .db_session import SqlAlchemyBase
 
 
+# класс, отвечающий за новости
+
 class News(SqlAlchemyBase, UserMixin, SerializerMixin):
     __tablename__ = 'news'
 
