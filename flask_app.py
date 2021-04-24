@@ -637,8 +637,8 @@ def send_mess():
 def main():
     db_session.global_init("db/user.db")
     port = int(os.environ.get("PORT", 5000))
-    # app.run(host='0.0.0.0', port=port)
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=port)
+    # app.run(debug=True)
 
 
 if __name__ == '__main__':
