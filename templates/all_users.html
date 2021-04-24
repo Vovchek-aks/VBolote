@@ -2,6 +2,18 @@
 
 {% block content %}
     <br>
+    <div>
+        <form class="news_text" action="" method="post">
+            <h6>Поиск друга</h6>
+            {{ form.hidden_tag() }}
+            <p class="input-message">
+                {{ form.text(class="form-control message-box") }}
+                {{ form.submit(type="submit", class="btn btn-primary send-message") }}
+                <a href="/all_users/|" class="btn btn-danger" style="margin-top: 6px; margin-left: 5px;">Отмена</a>
+            </p>
+        </form>
+    </div>
+    <br>
     <div class="row row-cols-1 row-cols-md-4 g-4">
     {% for user in users %}
         <div class="col">

@@ -318,12 +318,15 @@ def del_friend(user_id):
 
 
 # страница со всеми пользователями
-@app.route('/all_users')
+@app.route('/all_users/<name>', methods=['GET', 'POST'])
 @login_required
-def all_users():
+def all_users(name):
+    form = NewsForm()
+    if form.validate_on_submit():
+        return redirect(f"/all_users/{form.text.data}") if "".join(form.text.data.split()) else redirect("/all_users/|")
     db_sess = db_session.create_session()
-    users = db_sess.query(User).all()
-    return render_template('all_users.html', users=users)
+    users = db_sess.query(User).filter(User.name.like(f'%{name}%')).all() if name != "|" else db_sess.query(User).all()
+    return render_template('all_users.html', users=users, form=form)
 
 
 # страница выбора аватарки
@@ -634,7 +637,8 @@ def send_mess():
 def main():
     db_session.global_init("db/user.db")
     port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    # app.run(host='0.0.0.0', port=port)
+    app.run(debug=True)
 
 
 if __name__ == '__main__':
